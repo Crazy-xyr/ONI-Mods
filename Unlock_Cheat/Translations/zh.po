@@ -20,6 +20,16 @@ msgstr ""
 
 #. Unlock_Cheat.Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP
 msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP"
-msgid "将种子或植物随机变异."
+msgid "将种子或植物随机."
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME"
+msgid "自动收获"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP"
+msgid "植物成熟时自动掉落"
 msgstr ""
 

@@ -24,15 +24,22 @@
 
   <!--Publicized References-->
   <ItemGroup>
-
-    <Reference Include="Assembly-CSharp.dll" HintPath="$(GameFolder)/Assembly-CSharp.dll"  />
-    <Reference Include="Assembly-CSharp-firstpass.dll" HintPath="$(GameFolder)/Assembly-CSharp-firstpass.dll" />
-    <Reference Include="Unity.TextMeshPro.dll" HintPath="$(GameFolder)/Unity.TextMeshPro.dll" />
-
+	  <PubliciseInputAssemblies Include="
+					$(GameFolder)/Assembly-CSharp.dll;
+					$(GameFolder)/Assembly-CSharp-firstpass.dll;
+                    $(GameFolder)/Unity.TextMeshPro.dll"/>
+    <Reference Include="Assembly-CSharp.dll" HintPath="$(GameFolder)/Assembly-CSharp.dll"   Condition="'$(UsesAzeLib)' != 'true'"/>
+    <Reference Include="Assembly-CSharp-firstpass.dll" HintPath="$(GameFolder)/Assembly-CSharp-firstpass.dll" Condition="'$(UsesAzeLib)' != 'true'" />
+    <Reference Include="Unity.TextMeshPro.dll" HintPath="$(GameFolder)/Unity.TextMeshPro.dll" Condition="'$(UsesAzeLib)' != 'true'" />
+	<Reference Include="Assembly-CSharp_public" HintPath="../lib/Assembly-CSharp_public.dll"  Condition="'$(UsesAzeLib)' == 'true'" />
+	<Reference Include="Assembly-CSharp-firstpass_public" HintPath="../lib/Assembly-CSharp-firstpass_public.dll" Condition="'$(UsesAzeLib)' == 'true'" />
+	<Reference Include="Unity.TextMeshPro_public" HintPath="../lib/Unity.TextMeshPro_public.dll" Condition="'$(UsesAzeLib)' == 'true'" />
     <!--Meta References-->
     <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="*" />
     <PackageReference Include ="MSBuildTasks" Version="*"/>
-    <!--<PackageReference Include="HarmonyAnalyzers" Version="1.0.0" />-->
+	<PackageReference Include="Aze.Publicise.MSBuild.Task" Version="1.0.0" Condition="'$(UsesAzeLib)' == 'true'" />
+
+	  <!--<PackageReference Include="HarmonyAnalyzers" Version="1.0.0" />-->
     <!--<PackageReference Include="SuppressionAttributes" Version="1.0.0" />-->
     <!--<ProjectReference Include ="../AzeLib/AzeLib.csproj" Private ="true" Condition="'$(UsesAzeLib)' != 'false'"/>-->
     <PackageReference Include="PLib" Version="*" Private="true" Condition="'$(UsesPLib)' == 'true'" />

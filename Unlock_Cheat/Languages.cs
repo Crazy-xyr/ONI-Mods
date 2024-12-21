@@ -1,5 +1,5 @@
-using STRINGS;
-
+using System.Collections.Generic;
+using System.IO;
 namespace Unlock_Cheat
 {
     public static class Languages
@@ -32,12 +32,29 @@ namespace Unlock_Cheat
                 public class SELFHARVEST
                 {
                     // Token: 0x0400005D RID: 93
-                    public static LocString NAME = "自我收获";
+                    public static LocString NAME = "自动收获";
 
                     // Token: 0x0400005E RID: 94
                     public static LocString TOOLTIP = "植物成熟时自动掉落" ;
                 }
             }
         }
+
+        internal static bool TryLoadTranslations(out Dictionary<string, string> translations)
+        {
+            string path = Unlock_Cheat.UnlockCheat.path;
+            string path2 = "Translations";
+            Localization.Locale locale = Localization.GetLocale();
+            string path3 = Path.Combine(path, path2, ((locale != null) ? locale.Code : null) + ".po");
+            if (File.Exists(path3))
+            {
+                translations =Localization.LoadStringsFile(path3, false);
+                return true;
+            }
+            translations = null;
+            return false;
+        }
+
     }
+
 }

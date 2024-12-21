@@ -9,7 +9,7 @@
     <Title>Unlock_Cheat</Title>
     <Description>通过作弊解锁_物品皮肤、dubug成就.</Description>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Remove="Export\README.md" />
   </ItemGroup>
@@ -17,7 +17,8 @@
 	<PropertyGroup>
 		<UsesPLib>true</UsesPLib>
 		<ILRepack>true</ILRepack>
-
+		<UsesAzeLib>true</UsesAzeLib>
+		
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,7 +28,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="strings\" />
+	  <Folder Include="Translations\" />
 	</ItemGroup>
-  
+ 
 </Project>

@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Application: Oxygen Not Included"
+"POT Version: 2.0"
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.NAME
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.NAME"
+msgid "分析"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.TOOLTIP
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.TOOLTIP"
+msgid "分析种子不需要<link=\"GENETICANALYSISSTATION\">植物分析仪</link>"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.MUTATOR.NAME
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.MUTATOR.NAME"
+msgid "变异"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP"
+msgid "将种子或植物随机变异."
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME"
+msgid "自动收获"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP"
+msgid "植物成熟时自动掉落"
+msgstr ""
+

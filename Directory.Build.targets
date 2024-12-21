@@ -10,7 +10,11 @@
 
   <!--Publicise the game's assemblies on rebuilds.-->
 
-
+	<Target Name="Publicise" AfterTargets="Clean" Condition="'$(UsesAzeLib)' == 'true'">
+		<Publicise
+		  InputAssemblies="@(PubliciseInputAssemblies)"
+		  OutputPath="../lib/"/>
+	</Target>
   <!--Increment the version number after each build, resetting each day.-->
   <Import Project="AutoIncrement.targets" />
   <Target Name="AutoIncrement" BeforeTargets="PrepareForBuild">
@@ -104,7 +108,9 @@
       <TranslateFiles Include="$(TranslationsFolder)\$(MSBuildProjectName)\*.po" />
       <InfoFiles Include="$(TargetDir)\*.yaml" />
 	  <PreviewPng Include="$(ProjectDir)\*.png" />
-	  <TranslatePo Include="$(ProjectDir)\strings\*.*" />
+	  <TranslatePot Include="$(ProjectDir)\strings\*.*" />
+      <TranslatePo Include="$(ProjectDir)\Translations\*.*" />
+
 
 
 	</ItemGroup>
@@ -116,7 +122,9 @@
     <Copy SourceFiles="@(InfoFiles)" DestinationFolder="$(InstallFolder)" />
     <Copy SourceFiles="@(TranslateFiles)" DestinationFolder="$(InstallFolder)\Translations" />
 	<Copy SourceFiles="@(PreviewPng)" DestinationFolder="$(InstallFolder)" />
-	<Copy SourceFiles="@(TranslatePo)" DestinationFolder="$(InstallFolder)\strings\" />
+	<Copy SourceFiles="@(TranslatePot)" DestinationFolder="$(InstallFolder)\strings\" />
+	<Copy SourceFiles="@(TranslatePo)" DestinationFolder="$(InstallFolder)\Translations\" />
+
 
   </Target>
 
