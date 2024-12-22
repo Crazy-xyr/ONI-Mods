@@ -44,7 +44,8 @@ namespace Unlock_Cheat.MutantPlants
                 if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent && kprefabID.HasTag(GameTags.Plant))
                 {
 
-                    KIconButtonMenu.ButtonInfo button1 = new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP, true);
+                    KIconButtonMenu.ButtonInfo button1 = mutant.mutationIDs.Contains("SelfHarvest") ? new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP, true):
+                        new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP, true);
                     Game.Instance.userMenu.AddButton(mutant.gameObject, button1, 1f);
 
                 }
@@ -139,7 +140,7 @@ namespace Unlock_Cheat.MutantPlants
             public static void Postfix(PlantMutations __instance)
             {
 
-                PlantMutation plantMutation = new PlantMutation("SelfHarvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP);
+                PlantMutation plantMutation = new PlantMutation("SelfHarvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.MutationNAME, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP);
                 plantMutation.ForceSelfHarvestOnGrown();
                 plantMutation.originalMutation = true;
                 __instance.Add(plantMutation);

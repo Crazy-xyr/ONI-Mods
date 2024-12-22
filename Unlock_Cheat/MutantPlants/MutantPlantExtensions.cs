@@ -3,6 +3,8 @@ using UnityEngine;
 using Klei.AI;
 using System.Linq;
 using HarmonyLib;
+using EventSystem2Syntax;
+using PeterHan.PLib.Options;
 
 namespace Unlock_Cheat.MutantPlants
 {
@@ -104,6 +106,19 @@ namespace Unlock_Cheat.MutantPlants
                     Attributes attributes = mutant.GetAttributes();
                     attributes.Remove(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, -0.999999f, Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + "heavyFruit".ToUpper() + ".NAME")), true, false, true));
 
+                    if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent)
+                    {
+
+                        KMonoBehaviour kMonoBehaviour = mutant;
+                        if (kMonoBehaviour != null)
+                        {
+                            PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Languages.UI.USERMENUACTIONS.HARVEST_WHEN_READY.PLANT_DO_NOT_SELFHARVEST, kMonoBehaviour.transform, 1.5f, false);
+
+                        }
+
+                    }
+
+                   
                 }
 
                 else if (!allowedHarvest)
@@ -121,6 +136,15 @@ namespace Unlock_Cheat.MutantPlants
                     Attributes attributes = mutant.GetAttributes();
                     attributes.Add(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, -0.999999f, Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + "heavyFruit".ToUpper() + ".NAME")), true, false, true));
                     MutantPlantExtensions.DiscoverSilentlyAndIdentifySubSpecies(mutant.GetSubSpeciesInfo());
+                    if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent)
+                    {
+                        KMonoBehaviour kMonoBehaviour = mutant;
+                        if (kMonoBehaviour != null)
+                        {
+                            PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Languages.UI.USERMENUACTIONS.CANCEL_HARVEST_WHEN_READY.PLANT_SELFHARVEST, kMonoBehaviour.transform, 1.5f, false);
+
+                        } 
+                    }
                 }
 
             }

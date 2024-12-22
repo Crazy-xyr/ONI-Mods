@@ -2,7 +2,7 @@
 using STRINGS;
 using System;
 
-namespace Unlock_Cheat.MutantPlants
+namespace Unlock_Cheat.MutantPlants.CopySetting
 {
     class MutantCopyBuildingSettings : KMonoBehaviour
     {
@@ -29,5 +29,11 @@ namespace Unlock_Cheat.MutantPlants
             MutantCopySettingsTool.instance.SetSourceObject(base.gameObject);
             MutantCopySettingsTool.instance.Activate();
         }
+    }
+
+    class MutantCopyButton : CopySettingsTool
+
+    {
+        [MyCmpAdd] private MutantCopyBuildingSettings copyEntitySettings;
     }
 }

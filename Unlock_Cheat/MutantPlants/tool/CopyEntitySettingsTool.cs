@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unlock_Cheat.MutantPlants
+namespace Unlock_Cheat.MutantPlants.CopySetting
 {
     class MutantCopySettingsTool : DragTool
     {

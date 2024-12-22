@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-using Unlock_Cheat.MutantPlants;
+using Unlock_Cheat.MutantPlants.CopySetting;
 
 
-namespace Unlock_Cheat.MutantPlantsCopySetting
+namespace Unlock_Cheat.MutantPlants.CopySettingPatch
 {
     [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.OnPrefabInit))]
     public static class RegisterCopyEntitySettingsTool
