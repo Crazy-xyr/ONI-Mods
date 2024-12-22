@@ -19,7 +19,7 @@ namespace Unlock_Cheat
         public bool Achievement { get; set; }
 
         [JsonProperty]
-        [Option("皮肤解锁", "解锁全皮肤.", null)]
+        [Option("皮肤解锁", "解锁全皮肤!!!请勿宣传!!!", null)]
         public bool Skin { get; set; }
 
         [JsonProperty]
@@ -31,18 +31,18 @@ namespace Unlock_Cheat
         public bool MutantPlant { get; set; }
 
         [JsonProperty]
-        [Option("植物自动收获按钮修改", "植物禁用自动收获时,附加一个自动收获状态.之后不需要小人收获了", null)]
+        [Option("启用(功能修改)", "修改到游戏内植物原来的自动收获按钮，植物禁用自动收获时,附加一个自动收获状态.之后不需要小人收获了", "植物自动收获(二选一)")]
         public bool MutantPlant_SelfHarvest { get; set; }
 
         [JsonProperty]
-        [Option("植物自动收获单独按钮", "单独附加一个自动收获按钮,还原自动收获按钮功能", null)]
+        [Option("启用(单独按钮)", "单独生成一个自动收获按钮,植物原本的自动收获按钮功能不变,优先级高于上面", "植物自动收获(二选一)")]
         public bool MutantPlant_SelfHarvest_Independent { get; set; }
 
 
         public Options()
         {
             this.Achievement = true;
-            this.Skin = true;
+            this.Skin = false;
             this.Conduit = true;
             this.MutantPlant = true;
             this.MutantPlant_SelfHarvest= true;

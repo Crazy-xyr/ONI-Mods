@@ -91,7 +91,7 @@ namespace Unlock_Cheat
                 if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest && ! SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent )
                 {
 
-                    foreach (Type type in types.Where(n => n.Namespace == "Unlock_Cheat.MutantPlants.SelfHarvest"))
+                    foreach (Type type in types.Where(n => n.Namespace == "Unlock_Cheat.MutantPlants.SelfHarvestPatch"))
                     {
                         harmony.CreateClassProcessor(type).Patch();
 
@@ -125,7 +125,7 @@ namespace Unlock_Cheat
                 if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest && !flag)
                 {
 
-                    foreach (Type type in types.Where(n => n.Namespace == "Unlock_Cheat.MutantPlantsCopySetting"))
+                    foreach (Type type in types.Where(n => n.Namespace == "Unlock_Cheat.MutantPlants.CopySettingPatch"))
                     {
                         harmony.CreateClassProcessor(type).Patch();
 

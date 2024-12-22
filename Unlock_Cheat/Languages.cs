@@ -6,46 +6,69 @@ namespace Unlock_Cheat
     {
         public class UI
         {
-            // Token: 0x02000011 RID: 17
             public class USERMENUACTIONS
             {
-                // Token: 0x02000012 RID: 18
                 public class MUTATOR
                 {
-                    // Token: 0x0400005B RID: 91
                     public static LocString NAME = "变异";
 
-                    // Token: 0x0400005C RID: 92
                     public static LocString TOOLTIP = "将种子或植物随机变异.";
                 }
 
-                // Token: 0x02000013 RID: 19
                 public class IDENTIFY_MUTATION
                 {
-                    // Token: 0x0400005D RID: 93
                     public static LocString NAME = "分析";
 
-                    // Token: 0x0400005E RID: 94
                     public static LocString TOOLTIP = "分析种子不需要" + STRINGS.UI.FormatAsLink("植物分析仪", "GENETICANALYSISSTATION");
                 }
+                public class HARVEST_WHEN_READY
+                {
+                    public static LocString NAME = "启用复制人收获";
 
+                    public static LocString TOOLTIP = "当这株植物成熟时，复制人会收获,取消自动收获";
+
+                    public static LocString PLANT_DO_NOT_SELFHARVEST = "禁用自动掉落";
+
+                }
+                public class CANCEL_HARVEST_WHEN_READY
+                {
+                    public static LocString NAME = "禁用复制人收获";
+
+                    public static LocString TOOLTIP = "复制人不自动收获这株植物,改为成熟后自动掉落";
+
+                    public static LocString PLANT_SELFHARVEST = "启用自动掉落";
+
+                }
                 public class SELFHARVEST
                 {
-                    // Token: 0x0400005D RID: 93
-                    public static LocString NAME = "自动收获";
+                    public static LocString NAME = "启用植物自动收获";
 
-                    // Token: 0x0400005E RID: 94
-                    public static LocString TOOLTIP = "植物成熟时自动掉落" ;
+                    public static LocString MutationNAME = "植物自动收获";
+
+
+                    public static LocString TOOLTIP = "植物成熟时自动掉落";
+
+                    public static LocString CANCEL_NAME = "禁用植物自动收获";
+
+                    public static LocString CANCEL_TOOLTIP = "植物成熟时不会自动掉落";
+
+
                 }
             }
-        }
+            public class USERTEXT
+            {
+
+                public static LocString NO_OWNED = "这个皮肤你暂未拥有,只有使用权";
+            }
+
+         }
 
         internal static bool TryLoadTranslations(out Dictionary<string, string> translations)
         {
             string path = Unlock_Cheat.UnlockCheat.path;
             string path2 = "Translations";
             Localization.Locale locale = Localization.GetLocale();
-            string path3 = Path.Combine(path, path2, ((locale != null) ? locale.Code : null) + ".po");
+            string path3 = Path.Combine(path, path2, ((locale != null) ? locale.Code : "zh") + ".po");
             if (File.Exists(path3))
             {
                 translations =Localization.LoadStringsFile(path3, false);
