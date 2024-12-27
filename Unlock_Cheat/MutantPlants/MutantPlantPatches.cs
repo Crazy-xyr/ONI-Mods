@@ -39,25 +39,25 @@ namespace Unlock_Cheat.MutantPlants
                     KIconButtonMenu.ButtonInfo button = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.MUTATOR.NAME, new System.Action(mutant.Mutator), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP, true);
                     Game.Instance.userMenu.AddButton(mutant.gameObject, button, 1f);
 
-                }
+                    }
 
-                if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent && kprefabID.HasTag(GameTags.Plant))
+                    if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent && kprefabID.HasTag(GameTags.Plant))
                 {
-
-                    KIconButtonMenu.ButtonInfo button1 = mutant.mutationIDs.Contains("SelfHarvest") ? new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP, true):
+                     
+                    KIconButtonMenu.ButtonInfo button1 = (mutant.MutationIDs != null && mutant.MutationIDs.Contains("SelfHarvest")) ? new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP, true):
                         new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP, true);
-                    Game.Instance.userMenu.AddButton(mutant.gameObject, button1, 1f);
+                        Game.Instance.userMenu.AddButton(mutant.gameObject, button1, 1f);
 
-                }
+                    }
 
-                if (!mutant.IsOriginal && !mutant.IsIdentified)
+                    if (!mutant.IsOriginal && !mutant.IsIdentified)
                 {
-                    KIconButtonMenu.ButtonInfo button2 = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.NAME, new System.Action(mutant.IdentifyMutation), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.TOOLTIP, true);
+                        KIconButtonMenu.ButtonInfo button2 = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.NAME, new System.Action(mutant.IdentifyMutation), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.TOOLTIP, true);
                     Game.Instance.userMenu.AddButton(mutant.gameObject, button2, 1f);
                 }
+                }
             }
-        }
-
+       
         private static void OnCopySettings(MutantPlant newdata,object data)
         {
             GameObject gameObject = (GameObject)data;
