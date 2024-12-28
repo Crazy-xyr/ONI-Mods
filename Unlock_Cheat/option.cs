@@ -31,6 +31,10 @@ namespace Unlock_Cheat
         public bool MutantPlant { get; set; }
 
         [JsonProperty]
+        [Option("允许植物多次变异", "变异植物添加也变异按钮,选择好需要的变异后.重新保存读档只有最后一次变异才会生效.否则面板上的数据不准确,实际上是多个变异效果叠加,会有意料之外的效果", null)]
+        public bool MutantPlant_Mult { get; set; }
+
+        [JsonProperty]
         [Option("启用(功能修改)", "修改到游戏内植物原来的自动收获按钮，植物禁用自动收获时,附加一个自动收获状态.之后不需要小人收获了", "植物自动收获(二选一)")]
         public bool MutantPlant_SelfHarvest { get; set; }
 
@@ -45,6 +49,7 @@ namespace Unlock_Cheat
             this.Skin = false;
             this.Conduit = true;
             this.MutantPlant = true;
+            this.MutantPlant_Mult = false;
             this.MutantPlant_SelfHarvest= true;
             this.MutantPlant_SelfHarvest_Independent = false;
         }

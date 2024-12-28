@@ -4,39 +4,28 @@ using UnityEngine;
 using Klei.AI;
 using Database;
 using PeterHan.PLib.Options;
+using static Unlock_Cheat.Languages.UI.USERMENUACTIONS;
+using System.Linq;
 
 namespace Unlock_Cheat.MutantPlants
 {
     internal class MutantPlantPatches
     {
 
-        public static global::Action MaxAction { get {
-
-                global::Action action;
-                if (!Enum.TryParse<global::Action>("NumActions", out action))
-                {
-                    Array values = Enum.GetValues(typeof(global::Action));
-                    if (values.Length > 0)
-                    {
-                        action = (global::Action)values.GetValue(values.Length - 1);
-                    }
-                    else
-                    {
-                        action = global::Action.NumActions;
-                    }
-                }
-                return  action;
-                }
-
-        }
         private static void OnRefreshUserMenu(MutantPlant mutant)
         {
             KPrefabID kprefabID;
             if (mutant != null && mutant.TryGetComponent<KPrefabID>(out kprefabID))
             {
-                if ((mutant.IsOriginal && !kprefabID.HasTag(GameTags.PlantBranch)) || kprefabID.HasTag(GameTags.Seed) || kprefabID.HasTag(GameTags.CropSeed) || kprefabID.HasTag(GameTags.Plant))
+
+                bool Is_SelfHarvest = (mutant.MutationIDs != null && mutant.MutationIDs.Contains("SelfHarvest"));
+                bool Has_Mutation = (mutant.MutationIDs != null && mutant.MutationIDs.Any(e => !e.Equals("SelfHarvest")));
+
+
+                if ( (mutant.IsOriginal && !kprefabID.HasTag(GameTags.PlantBranch)) || kprefabID.HasTag(GameTags.Seed) || kprefabID.HasTag(GameTags.CropSeed) || 
+                    (kprefabID.HasTag(GameTags.MutatedSeed)  && (SingletonOptions<Options>.Instance.MutantPlant_Mult  || !Has_Mutation)))
                 {
-                    KIconButtonMenu.ButtonInfo button = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.MUTATOR.NAME, new System.Action(mutant.Mutator), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP, true);
+                    KIconButtonMenu.ButtonInfo button = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.MUTATOR.NAME, new System.Action(mutant.Mutator), global::Action.NumActions, null, null, null, Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP, true);
                     Game.Instance.userMenu.AddButton(mutant.gameObject, button, 1f);
 
                     }
@@ -44,15 +33,15 @@ namespace Unlock_Cheat.MutantPlants
                     if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent && kprefabID.HasTag(GameTags.Plant))
                 {
                      
-                    KIconButtonMenu.ButtonInfo button1 = (mutant.MutationIDs != null && mutant.MutationIDs.Contains("SelfHarvest")) ? new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP, true):
-                        new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME, new System.Action(mutant.SelfHarvest), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP, true);
+                    KIconButtonMenu.ButtonInfo button1 = Is_SelfHarvest ? new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_NAME, new System.Action(mutant.SelfHarvest), global::Action.NumActions, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP, true):
+                        new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.NAME, new System.Action(mutant.SelfHarvest), global::Action.NumActions, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP, true);
                         Game.Instance.userMenu.AddButton(mutant.gameObject, button1, 1f);
 
                     }
 
                     if (!mutant.IsOriginal && !mutant.IsIdentified)
                 {
-                        KIconButtonMenu.ButtonInfo button2 = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.NAME, new System.Action(mutant.IdentifyMutation), MaxAction, null, null, null, Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.TOOLTIP, true);
+                        KIconButtonMenu.ButtonInfo button2 = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.NAME, new System.Action(mutant.IdentifyMutation), global::Action.NumActions, null, null, null, Languages.UI.USERMENUACTIONS.IDENTIFY_MUTATION.TOOLTIP, true);
                     Game.Instance.userMenu.AddButton(mutant.gameObject, button2, 1f);
                 }
                 }
@@ -65,9 +54,10 @@ namespace Unlock_Cheat.MutantPlants
             if (flag)
             {
                 MutantPlant component = gameObject.GetComponent<MutantPlant>();
-                bool flag2 = !(component == null);
+                bool flag2 = !(component == null);             
                 if (flag2)
-                {
+                {                  
+
                     newdata.Mutator(component.MutationIDs);
 
 
@@ -146,7 +136,7 @@ namespace Unlock_Cheat.MutantPlants
                 __instance.Add(plantMutation);
 
             }
-        } 
+        }
 
     }
 }

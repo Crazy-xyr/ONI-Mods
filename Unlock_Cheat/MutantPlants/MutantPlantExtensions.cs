@@ -20,7 +20,7 @@ namespace Unlock_Cheat.MutantPlants
 
                     HashSet<Tag> identifiedSubSpecies = Traverse.Create(PlantSubSpeciesCatalog.Instance).Field("identifiedSubSpecies").GetValue<HashSet<Tag>>();
 
-                   // Debug.Log("[测试] 前  "+ PlantSubSpeciesCatalog.Instance.identifiedSubSpecies.Count+"  "+ speciesInfo.ID);
+                    // Debug.Log("[测试] 前  "+ PlantSubSpeciesCatalog.Instance.identifiedSubSpecies.Count+"  "+ speciesInfo.ID);
                     identifiedSubSpecies.Add(speciesInfo.ID);
 
                     //Debug.Log("[测试] 后  " + PlantSubSpeciesCatalog.Instance.identifiedSubSpecies.Count + "  " + PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(speciesInfo.ID));
@@ -73,12 +73,11 @@ namespace Unlock_Cheat.MutantPlants
                     mutant.delattr();
 
                 }          
-                if (mutationIDs != null && mutationIDs.Count == 1 && mutationIDs.Contains("SelfHarvest")) {
+                //if (mutationIDs != null && mutationIDs.Count == 1 && mutationIDs.Contains("SelfHarvest")) {
 
-                    mutant.SelfHarvest(false);
-                    return;
-                }
-
+                //    mutant.SelfHarvest(false);
+                //    return;
+                //}
                 mutant.SetSubSpecies(mutationIDs);
                 ApplyMutator(mutant);
             }
@@ -87,9 +86,9 @@ namespace Unlock_Cheat.MutantPlants
         {
 
             bool flag = (mutant.MutationIDs != null && mutant.MutationIDs.Contains("SelfHarvest"));
-          
-            mutant.SelfHarvest(flag);
-        }
+
+                mutant.SelfHarvest(flag);
+            }
         internal static void SelfHarvest(this MutantPlant mutant, bool allowedHarvest = false)
         {
 
@@ -102,9 +101,12 @@ namespace Unlock_Cheat.MutantPlants
                 {
                     strings = mutant.MutationIDs;
                     strings.Remove("SelfHarvest");
-                    mutant.SetSubSpecies(strings);
-                    Attributes attributes = mutant.GetAttributes();
-                    attributes.Remove(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, -0.999999f, Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + "heavyFruit".ToUpper() + ".NAME")), true, false, true));
+                    mutant.Analyze();
+                    mutant.Mutator(strings);
+
+                    // MutantPlantExtensions.DiscoverSilentlyAndIdentifySubSpecies(mutant.GetSubSpeciesInfo());
+                    // Attributes attributes = mutant.GetAttributes();
+                    //attributes.Remove(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, -0.999999f, Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + "heavyFruit".ToUpper() + ".NAME")), true, false, true));
 
                     if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent)
                     {
@@ -123,7 +125,7 @@ namespace Unlock_Cheat.MutantPlants
 
                 else if (!allowedHarvest)
                 {
-            
+                   
                     strings =  mutant.MutationIDs ?? new List<string> { };
                    if (strings.Contains("SelfHarvest"))
                     {
@@ -131,20 +133,21 @@ namespace Unlock_Cheat.MutantPlants
                    }
 
                     strings.Add("SelfHarvest");
-                    mutant.SetSubSpecies(strings);
                     mutant.Analyze();
-                    Attributes attributes = mutant.GetAttributes();
-                    attributes.Add(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, -0.999999f, Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + "heavyFruit".ToUpper() + ".NAME")), true, false, true));
-                    MutantPlantExtensions.DiscoverSilentlyAndIdentifySubSpecies(mutant.GetSubSpeciesInfo());
+                    mutant.Mutator(strings);
+                    //mutant.ApplyMutations();
+                   // Attributes attributes = mutant.GetAttributes();
+                   // attributes.Add(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, -0.999999f, Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + "heavyFruit".ToUpper() + ".NAME")), true, false, true));
+                   // MutantPlantExtensions.DiscoverSilentlyAndIdentifySubSpecies(mutant.GetSubSpeciesInfo());
                     if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent)
                     {
                         KMonoBehaviour kMonoBehaviour = mutant;
                         if (kMonoBehaviour != null)
                         {
-                            PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Languages.UI.USERMENUACTIONS.CANCEL_HARVEST_WHEN_READY.PLANT_SELFHARVEST, kMonoBehaviour.transform, 1.5f, false);
+                            PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, Languages.UI.USERMENUACTIONS.CANCEL_HARVEST_WHEN_READY.PLANT_SELFHARVEST, kMonoBehaviour.transform, 1.5f, false);
 
                         } 
-                    }
+                    }                            
                 }
 
             }
@@ -205,7 +208,7 @@ namespace Unlock_Cheat.MutantPlants
             }
             KBatchedAnimController component = mutant.GetComponent<KBatchedAnimController>();
             component.TintColour = Color.white;
-            foreach (string mutationID in mutant.MutationIDs.Where(e => e != "SelfHarvest"))
+            foreach (string mutationID in mutant.MutationIDs)
             {
                 PlantMutation mutation = Db.Get().PlantMutations.Get(mutationID);
                 Attributes attributes = mutant.GetAttributes();
@@ -258,7 +261,7 @@ namespace Unlock_Cheat.MutantPlants
 
             }
 
-            mutant.SetSubSpecies(new List<string> { });
+            mutant.SetSubSpecies(null);
 
         }
 
