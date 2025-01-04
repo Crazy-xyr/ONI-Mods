@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using HarmonyLib;
 using KMod;
+using static STRINGS.UI.FRONTEND;
 
-namespace undancer.Commons
+namespace crazyxyr.Commons
 {
     public static class ModUtils
     {
@@ -21,5 +23,28 @@ namespace undancer.Commons
         {
             return Mods.Exists(label => id == label.id);
         }
+        public static bool HasModbydlc(IReadOnlyList<Mod> mods, List<string> banmod )
+        {
+
+
+            bool flag = false;
+
+            foreach (Mod mod in mods)
+            {
+
+                if (mod.IsEnabledForActiveDlc() && banmod.Contains(mod.label.id))
+                {
+
+                    flag = true;
+                    break;
+                }
+
+            }
+            return flag;
+
+
+        }
+
     }
+
 }

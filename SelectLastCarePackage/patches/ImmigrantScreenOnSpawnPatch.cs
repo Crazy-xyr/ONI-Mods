@@ -1,8 +1,6 @@
 using HarmonyLib;
 using STRINGS;
-using System.Collections.Generic;
-using undancer.Commons;
-
+using crazyxyr.Commons;
 namespace crazyxyr.SelectLastCarePackage.Patches
 {
     [HarmonyPatch(typeof(ImmigrantScreen), "OnSpawn")]
@@ -11,8 +9,8 @@ namespace crazyxyr.SelectLastCarePackage.Patches
         public static void Postfix(KButton ___rejectButton )
         {
             if (ModUtils.HasRefreshMod()) return;
-            ___rejectButton
-                .SetText(
+
+            ___rejectButton.GetComponentInChildren<LocText>().SetText(
                     Localization.GetLocale() != null &&
                     Localization.GetLocale().Lang == Localization.Language.Chinese
                         ? Languages.REROLL

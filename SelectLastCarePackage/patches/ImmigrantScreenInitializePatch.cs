@@ -3,7 +3,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 
-namespace crazyxyr.SelectLastCarePackage.Patches
+namespace crazyxyr.SelectLastCarePackage.Patches2
 {
     [HarmonyPatch(typeof(ImmigrantScreen), "Initialize")]
     public static class ImmigrantScreenInitializePatch
@@ -12,8 +12,6 @@ namespace crazyxyr.SelectLastCarePackage.Patches
         private static GameObject Title;
         public static bool Prefix(ImmigrantScreen __instance)
         {
-
-
 
 
             if (Title == null)   //Title modification code reference 'Duplicant Stat Selector' by Sgt-Imalas
@@ -52,14 +50,8 @@ namespace crazyxyr.SelectLastCarePackage.Patches
 
         public static void Postfix(ImmigrantScreen __instance)
         {
-
             ImmigrantScreenMethod.ShowButton(__instance);
-
-      
         }
-
-
-
 
     }
 }

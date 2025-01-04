@@ -1,7 +1,6 @@
 using HarmonyLib;
 using KSerialization;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace crazyxyr.SelectLastCarePackage
@@ -20,24 +19,14 @@ namespace crazyxyr.SelectLastCarePackage
         {
 
 
-
+            
             CharacterSelectionController controller = Traverse.Create(container).Field("controller").GetValue<CharacterSelectionController>();
-            CarePackageContainer.CarePackageInstanceData carePackageInstanceData = Traverse.Create(container).Field("carePackageInstanceData").GetValue<CarePackageContainer.CarePackageInstanceData>();
 
-
-
-            if (controller != null && controller.IsSelected(carePackageInstanceData)) // fix The original method Equals error
+            if (controller != null) // fix The original method Equals error
             {
-                container.DeselectDeliverable();
+                controller.RemoveLast();
             }
-            else 
-            {
-                ImmigrantScreenMethod.DeselectOtherDeliverable(controller);
-
-             }
-
-            Traverse.Create(container).Method("ClearEntryIcons").GetValue();
-            Traverse.Create(container).Method("GenerateCharacter", new object[] { true }).GetValue();
+            Traverse.Create(container).Method("Reshuffle", new object[] { false }).GetValue();
 
         }
 
@@ -124,7 +113,6 @@ namespace crazyxyr.SelectLastCarePackage
                             }
                             else {
                                 modelDropDown.transform.parent.gameObject.SetActive(false);
-
                             }
                            
 

@@ -1,7 +1,8 @@
-using System.IO;
 using System.Reflection;
 using HarmonyLib;
 using KMod;
+using crazyxyr.Commons;
+using System.Collections.Generic;
 
 namespace crazyxyr.SelectLastCarePackage
 {
@@ -9,7 +10,9 @@ namespace crazyxyr.SelectLastCarePackage
     {
         public override void OnLoad(Harmony harmony)
         {
-            base.OnLoad(harmony);
+
+            ManualPatch.ManualPatch_init(harmony, this.assembly.GetTypes());
+            ManualPatch.ManualPatch_NS("crazyxyr.SelectLastCarePackage.Patches");
 #if DEBUG
             ModUtil.RegisterForTranslation(typeof(Languages));
 #else
@@ -18,20 +21,21 @@ namespace crazyxyr.SelectLastCarePackage
 
         }
 
-        private static void RemoveConfig()
+        public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
         {
-            var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            var str = Path.Combine(new FileInfo(directoryName).Directory.Parent.FullName, "config");
-            if (!Directory.Exists(str))
+            if ( !ModUtils.HasModbydlc(mods, new List<string>() {"2856555858"}))
             {
-                Directory.CreateDirectory(str);
+                ManualPatch.ManualPatch_NS("crazyxyr.SelectLastCarePackage.Patches2");
+                Debug.Log("[最后的补给包-Fix] 刷新按钮启用");
             }
 
-            var _modConfigFolder = Path.Combine(str, new FileInfo(directoryName).Name);
-            if (Directory.Exists(_modConfigFolder))
+            else
             {
-                Directory.Delete(_modConfigFolder, true);
+                Debug.LogFormat("[最后的补给包-Fix] 刷新按钮按钮被mod_workshop_id: {0} 启用", "2856555858");
+            }
+            foreach (MethodBase method in harmony.GetPatchedMethods())
+            {
+                Debug.LogFormat("[最后的补给包-Fix] 修补了：{0}.{1}", method.DeclaringType.FullName, method.Name);
             }
         }
     }

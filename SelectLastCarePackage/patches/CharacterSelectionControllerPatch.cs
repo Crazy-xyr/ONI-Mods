@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static CarePackageContainer;
 
-namespace crazyxyr.SelectLastCarePackage.Patches
+namespace crazyxyr.SelectLastCarePackage.Patches2
 {
 
     [HarmonyPatch(typeof(CharacterSelectionController), "AddDeliverable")]
@@ -26,13 +26,9 @@ namespace crazyxyr.SelectLastCarePackage.Patches
                 __instance.RemoveDeliverable(del);
                 if (del is CarePackageInstanceData carePackageContainer) {
 
-                    global::Debug.Log("处理选人错误:" + carePackageContainer.info.id);
-
-
-         
-
+                    global::Debug.Log("处理补给包错误: " + carePackageContainer.info.id);
                 }
-                global::Debug.Log("处理补给包多选错误");
+                else global::Debug.Log("处理补给包多选错误");
             }
 
             return true;
@@ -47,18 +43,9 @@ namespace crazyxyr.SelectLastCarePackage.Patches
         public static void Prefix(CharacterContainer __instance)
         {
             CharacterSelectionController controller = Traverse.Create(__instance).Field("controller").GetValue<CharacterSelectionController>();
-            MinionStartingStats stats = Traverse.Create(__instance).Field("stats").GetValue<MinionStartingStats>();
-
-
-            if (controller != null && ! controller.IsSelected(stats))
+            if (controller != null )
             {
-
-                ImmigrantScreenMethod.DeselectOtherDeliverable(controller);
-
-
-                global::Debug.Log("取消补给包其他选择框");
-
-
+                controller.RemoveLast();
             }
 
         }
