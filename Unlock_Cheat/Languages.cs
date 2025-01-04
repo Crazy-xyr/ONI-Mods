@@ -27,7 +27,9 @@ namespace Unlock_Cheat
 
                     public static LocString TOOLTIP = "当这株植物成熟时，复制人会收获,取消自动收获";
 
-                    public static LocString PLANT_DO_NOT_SELFHARVEST = "禁用自动掉落";
+                    public static LocString PLANT_DO_NOT_SELFHARVEST = "禁用自动掉落(需要保存加载生效)";
+
+                    public static LocString Reload = "需要保存加载生效";
 
                 }
                 public class CANCEL_HARVEST_WHEN_READY
@@ -50,7 +52,7 @@ namespace Unlock_Cheat
 
                     public static LocString CANCEL_NAME = "禁用植物自动收获";
 
-                    public static LocString CANCEL_TOOLTIP = "植物成熟时不会自动掉落";
+                    public static LocString CANCEL_TOOLTIP = "植物成熟时不会自动掉落(切换状态后需要保存加载一次)";
 
 
                 }
@@ -59,6 +61,7 @@ namespace Unlock_Cheat
             {
 
                 public static LocString NO_OWNED = "这个皮肤你暂未拥有,只有使用权";
+                public static LocString LAST_OWNED = "这个皮肤数量是你拥有的最后的一件，分解后就没有了";
             }
 
          }

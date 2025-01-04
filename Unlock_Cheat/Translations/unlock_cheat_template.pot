@@ -25,7 +25,12 @@ msgstr ""
 
 #. Unlock_Cheat.Languages.UI.USERMENUACTIONS.HARVEST_WHEN_READY.PLANT_DO_NOT_SELFHARVEST
 msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.HARVEST_WHEN_READY.PLANT_DO_NOT_SELFHARVEST"
-msgid "禁用自动掉落"
+msgid "禁用自动掉落(需要保存加载生效)"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERMENUACTIONS.HARVEST_WHEN_READY.Reload
+msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.HARVEST_WHEN_READY.Reload"
+msgid "需要保存加载生效"
 msgstr ""
 
 #. Unlock_Cheat.Languages.UI.USERMENUACTIONS.HARVEST_WHEN_READY.TOOLTIP
@@ -60,7 +65,7 @@ msgstr ""
 
 #. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP
 msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP"
-msgid "植物成熟时不会自动掉落"
+msgid "植物成熟时不会自动掉落(切换状态后需要保存加载一次)"
 msgstr ""
 
 #. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.MutationNAME
@@ -76,6 +81,11 @@ msgstr ""
 #. Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP
 msgctxt "Unlock_Cheat.Languages.UI.USERMENUACTIONS.SELFHARVEST.TOOLTIP"
 msgid "植物成熟时自动掉落"
+msgstr ""
+
+#. Unlock_Cheat.Languages.UI.USERTEXT.LAST_OWNED
+msgctxt "Unlock_Cheat.Languages.UI.USERTEXT.LAST_OWNED"
+msgid "这个皮肤数量是你拥有的最后的一件，分解后就没有了"
 msgstr ""
 
 #. Unlock_Cheat.Languages.UI.USERTEXT.NO_OWNED

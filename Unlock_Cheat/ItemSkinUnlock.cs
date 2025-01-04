@@ -86,17 +86,24 @@ namespace Unlock_Cheat.ItemSkinUnlock
                 PermitResource SelectedPermit = Traverse.Create(__instance).Property("SelectedPermit").GetValue<PermitResource>();
                 if (SelectedPermit != null) {
 
-                    bool flag = PermitItems.GetOwnedCount(SelectedPermit) > 1;
+                    int count = PermitItems.GetOwnedCount(SelectedPermit);
 
-                    if (flag) { 
-                        return; 
+                    if (count > 2)
+                    {
+                        return;
                     }
-                    HierarchyReferences component2 = __instance.barterSellButton.GetComponent<HierarchyReferences>();
-                    LocText reference2 = component2.GetReference<LocText>("CostLabel");                   
-                    __instance.barterSellButton.isInteractable = flag;
-                    __instance.barterSellButton.GetComponent<ToolTip>().SetSimpleTooltip(Languages.UI.USERTEXT.NO_OWNED);
-                    reference2.SetText("");
-                    reference2.color = Color.white;
+                    else if (count == 2) {
+                            __instance.barterSellButton.GetComponent<ToolTip>().SetSimpleTooltip(Languages.UI.USERTEXT.LAST_OWNED);
+                    }
+                    else {
+                        HierarchyReferences component2 = __instance.barterSellButton.GetComponent<HierarchyReferences>();
+                        LocText reference2 = component2.GetReference<LocText>("CostLabel");
+                        __instance.barterSellButton.isInteractable = false;
+                        __instance.barterSellButton.GetComponent<ToolTip>().SetSimpleTooltip(Languages.UI.USERTEXT.NO_OWNED);
+                        reference2.SetText("");
+                        reference2.color = Color.white;
+                    }
+
                 }
 
 

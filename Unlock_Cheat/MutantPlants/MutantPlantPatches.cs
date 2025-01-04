@@ -6,6 +6,7 @@ using Database;
 using PeterHan.PLib.Options;
 using static Unlock_Cheat.Languages.UI.USERMENUACTIONS;
 using System.Linq;
+using static DiscreteShadowCaster;
 
 namespace Unlock_Cheat.MutantPlants
 {
@@ -19,18 +20,18 @@ namespace Unlock_Cheat.MutantPlants
             {
 
                 bool Is_SelfHarvest = (mutant.MutationIDs != null && mutant.MutationIDs.Contains("SelfHarvest"));
-                bool Has_Mutation = (mutant.MutationIDs != null && mutant.MutationIDs.Any(e => !e.Equals("SelfHarvest")));
+              //  bool Has_Mutation = (mutant.MutationIDs != null && mutant.MutationIDs.Any(e => !e.Equals("SelfHarvest")));
 
 
                 if ( (mutant.IsOriginal && !kprefabID.HasTag(GameTags.PlantBranch)) || kprefabID.HasTag(GameTags.Seed) || kprefabID.HasTag(GameTags.CropSeed) || 
-                    (kprefabID.HasTag(GameTags.MutatedSeed)  && (SingletonOptions<Options>.Instance.MutantPlant_Mult  || !Has_Mutation)))
+                    (kprefabID.HasTag(GameTags.MutatedSeed)  && (SingletonOptions<Options>.Instance.MutantPlant_Mult  )))
                 {
                     KIconButtonMenu.ButtonInfo button = new KIconButtonMenu.ButtonInfo("action_select_research", Languages.UI.USERMENUACTIONS.MUTATOR.NAME, new System.Action(mutant.Mutator), global::Action.NumActions, null, null, null, Languages.UI.USERMENUACTIONS.MUTATOR.TOOLTIP, true);
                     Game.Instance.userMenu.AddButton(mutant.gameObject, button, 1f);
 
                     }
 
-                    if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent && kprefabID.HasTag(GameTags.Plant))
+                    if (SingletonOptions<Options>.Instance.MutantPlant && SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest_Independent && kprefabID.HasTag(GameTags.Plant))
                 {
                      
                     KIconButtonMenu.ButtonInfo button1 = Is_SelfHarvest ? new KIconButtonMenu.ButtonInfo("action_harvest", Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_NAME, new System.Action(mutant.SelfHarvest), global::Action.NumActions, null, null, null, Languages.UI.USERMENUACTIONS.SELFHARVEST.CANCEL_TOOLTIP, true):
@@ -56,10 +57,8 @@ namespace Unlock_Cheat.MutantPlants
                 MutantPlant component = gameObject.GetComponent<MutantPlant>();
                 bool flag2 = !(component == null);             
                 if (flag2)
-                {                  
-
-                    newdata.Mutator(component.MutationIDs);
-
+                {
+                    newdata.ApplyMutator(component.MutationIDs);
 
                 }
             }

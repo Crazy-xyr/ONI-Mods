@@ -18,7 +18,9 @@
 		<UsesPLib>true</UsesPLib>
 		<ILRepack>true</ILRepack>
 		<UsesAzeLib>true</UsesAzeLib>
-		
+		<UseCommons>true</UseCommons>
+
+
 	</PropertyGroup>
 
 	<ItemGroup>
