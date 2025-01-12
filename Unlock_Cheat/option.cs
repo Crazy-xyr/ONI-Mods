@@ -27,20 +27,37 @@ namespace Unlock_Cheat
         public bool Conduit { get; set; }
 
         [JsonProperty]
-        [Option("植物变异", "种子/植物添加变异按钮.", null)]
+        [Option("植物变异", "种子/植物添加变异按钮.", "植物变异")]
         public bool MutantPlant { get; set; }
 
         [JsonProperty]
-        [Option("允许植物多次变异", "变异植物添加也变异按钮,选择好需要的变异后.重新保存读档只有最后一次变异才会生效.否则面板上的数据不准确,实际上是多个变异效果叠加,会有意料之外的效果", null)]
+        [Option("允许植物多次变异", "变异植物添加也变异按钮,选择好需要的变异后.重新保存读档只有最后一次变异才会生效.否则面板上的数据不准确,实际上是多个变异效果叠加,会有意料之外的效果", "植物变异")]
         public bool MutantPlant_Mult { get; set; }
 
-        //[JsonProperty]
-        //[Option("启用(功能修改)", "修改到游戏内植物原来的自动收获按钮，植物禁用自动收获时,附加一个自动收获状态.之后不需要小人收获了", "植物自动收获(二选一)")]
+        [JsonProperty]
+        [Option("变异植物自动收获", "所有的变异植物都会自动收获按,需要开启植物变异", "植物变异")]
         public bool MutantPlant_SelfHarvest { get; set; }
 
-        [JsonProperty]
-        [Option("启用植物自动收获按钮", "单独生成一个自动收获按钮,需要开启植物变异", null)]
+
+        //[JsonProperty]
+        //[Option("启用植物自动收获按钮", "单独生成一个自动收获按钮,需要开启植物变异", "植物变异")]
         public bool MutantPlant_SelfHarvest_Independent { get; set; }
+
+
+        [JsonProperty]
+        [Option("太空挖矿倍率", "用更少的钻石挖更多的矿", "太空挖矿")]
+        [Limit(1f,1000f)]
+        public float Harvest_mult { get; set; }
+
+        [JsonProperty]
+        [Option("火箭货仓容量修改", "挖矿效率提高应该搭配更大的货仓", "太空挖矿")]
+        [Limit(1f, 1000f)]
+        public float Harvest_storage_mult { get; set; }
+
+        [JsonProperty]
+        [Option("太空矿物质量修改", "挖矿效率提高应该搭配更大的矿物", "太空挖矿")]
+        [Limit(1f, 1000f)]
+        public float Harvest_poi_mult { get; set; }
 
 
         public Options()
@@ -52,6 +69,10 @@ namespace Unlock_Cheat
             this.MutantPlant_Mult = false;
             this.MutantPlant_SelfHarvest= false;
             this.MutantPlant_SelfHarvest_Independent = false;
+            this.Harvest_mult = 1f;
+            this.Harvest_storage_mult = 1f;
+            this.Harvest_poi_mult = 1f;
+
         }
     }
 }

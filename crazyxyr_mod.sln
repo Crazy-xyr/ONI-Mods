@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harvest", "Harvest\Harvest.csproj", "{A50AD089-4822-4E41-B46F-767F311FAB85}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{1639E6C0-54C2-443D-84C1-E295FE00C2CA}"
 	ProjectSection(SolutionItems) = preProject
 		AutoIncrement.targets = AutoIncrement.targets
@@ -33,21 +31,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|Mergedown.ActiveCfg = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|Mergedown.Build.0 = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|Vanilla.ActiveCfg = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|Vanilla.Build.0 = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Debug|x64.Build.0 = Debug|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|Mergedown.ActiveCfg = Release|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|Mergedown.Build.0 = Release|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|Vanilla.ActiveCfg = Release|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|Vanilla.Build.0 = Release|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|x64.ActiveCfg = Release|Any CPU
-		{A50AD089-4822-4E41-B46F-767F311FAB85}.Release|x64.Build.0 = Release|Any CPU
 		{82BC8CDD-752D-49E2-B467-63F1821B365D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82BC8CDD-752D-49E2-B467-63F1821B365D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82BC8CDD-752D-49E2-B467-63F1821B365D}.Debug|Mergedown.ActiveCfg = Debug|Any CPU

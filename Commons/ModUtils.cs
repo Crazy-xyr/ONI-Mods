@@ -7,7 +7,7 @@ namespace crazyxyr.Commons
 {
     public static class ModUtils
     {
-        private static readonly List<Label> Mods = Global.Instance.modManager.mods.FindAll(mod => mod.enabled)
+        private static readonly List<Label> Mods = Global.Instance.modManager.mods.FindAll(mod => mod.IsEnabledForActiveDlc())
             .ConvertAll(mod => mod.label);
 
         private const string RefreshModId = "1724518038";

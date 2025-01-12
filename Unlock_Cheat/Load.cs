@@ -52,13 +52,15 @@ namespace Unlock_Cheat
                 if (option.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
                 if (option.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
                 if (option.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
-                if (option.MutantPlant && option.MutantPlant_SelfHarvest && !option.MutantPlant_SelfHarvest_Independent ) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
+                if (DlcManager.GetHighestActiveDlcId() == "EXPANSION1_ID") ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
+
+                // if (option.MutantPlant && option.MutantPlant_SelfHarvest && !option.MutantPlant_SelfHarvest_Independent ) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
             }
 
             public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
             {
 
-                if (SingletonOptions<Options>.Instance.MutantPlant_SelfHarvest && !ModUtils.HasModbydlc(mods, new List<string>() { SuppressNotifications }))
+                if (SingletonOptions<Options>.Instance.MutantPlant && !ModUtils.HasModbydlc(mods, new List<string>() { SuppressNotifications }))
                 {
                     ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.CopySettingPatch");
                     Debug.Log("[Unlock_Cheat] 植物复制按钮启用");
