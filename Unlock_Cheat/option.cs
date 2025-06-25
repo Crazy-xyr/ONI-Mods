@@ -59,6 +59,11 @@ namespace Unlock_Cheat
         [Limit(1f, 1000f)]
         public float Harvest_poi_mult { get; set; }
 
+        [JsonProperty]
+        [Option("伤害修改", "单发火箭伤害", "宇宙内爆破弹")]
+        [Limit(0, 1000)]
+        public int MissileLongRange_damage { get; set; }
+
 
         public Options()
         {
@@ -72,6 +77,7 @@ namespace Unlock_Cheat
             this.Harvest_mult = 1f;
             this.Harvest_storage_mult = 1f;
             this.Harvest_poi_mult = 1f;
+            this.MissileLongRange_damage = 10;
 
         }
     }

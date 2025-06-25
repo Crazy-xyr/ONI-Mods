@@ -52,9 +52,11 @@ namespace Unlock_Cheat
                 if (option.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
                 if (option.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
                 if (option.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
-                if (DlcManager.GetHighestActiveDlcId() == "EXPANSION1_ID") ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
+                if (DlcManager.IsExpansion1Active()) ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
 
-                // if (option.MutantPlant && option.MutantPlant_SelfHarvest && !option.MutantPlant_SelfHarvest_Independent ) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
+                if ( option.MutantPlant_SelfHarvest ) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
+
+                if (DlcManager.IsAllContentSubscribed(new string[] {"EXPANSION1_ID" ,"DLC4_ID"}  )) ManualPatch.ManualPatch_NS("Unlock_Cheat.MissileLongRange");
             }
 
             public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
