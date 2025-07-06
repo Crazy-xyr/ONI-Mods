@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <AssemblyTitle>GeoTuner_mod</AssemblyTitle>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>GeoTuner_mod</Title>
+    <Description>间歇泉协调多合一.</Description>
+	  <UsesPLib>true</UsesPLib>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="Export\README.md" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="preview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+</Project>

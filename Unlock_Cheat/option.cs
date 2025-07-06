@@ -50,7 +50,7 @@ namespace Unlock_Cheat
         public float Harvest_mult { get; set; }
 
         [JsonProperty]
-        [Option("火箭货仓容量修改", "挖矿效率提高应该搭配更大的货仓", "太空挖矿")]
+        [Option("火箭货仓容量修改", "挖矿效率提高应该搭配更大的货仓,装卸端口也会同步提高", "太空挖矿")]
         [Limit(1f, 1000f)]
         public float Harvest_storage_mult { get; set; }
 

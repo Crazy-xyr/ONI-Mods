@@ -72,5 +72,17 @@ namespace Unlock_Cheat.Harvest
                 capacity *= option.Harvest_storage_mult;
             }
         }
+
+
+        [HarmonyPatch(typeof(BaseModularLaunchpadPortConfig))]
+        [HarmonyPatch("ConfigureBuildingTemplate")]
+
+        public class BaseModularLaunchpadPortConfig_ConfigureBuildingTemplate
+        {
+            public static void Prefix(ref float storageSize)
+            {
+                storageSize *= option.Harvest_storage_mult * 1000;
+            }
+        }
     }
 }
