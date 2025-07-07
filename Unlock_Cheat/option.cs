@@ -27,6 +27,10 @@ namespace Unlock_Cheat
         public bool Conduit { get; set; }
 
         [JsonProperty]
+        [Option("物质挥发", "禁止物质挥发(除氧石).", null)]
+        public bool Nosublimate { get; set; }
+
+        [JsonProperty]
         [Option("植物变异", "种子/植物添加变异按钮.", "植物变异")]
         public bool MutantPlant { get; set; }
 
@@ -70,6 +74,7 @@ namespace Unlock_Cheat
             this.Achievement = true;
             this.Skin = false;
             this.Conduit = true;
+            this.Nosublimate = true;
             this.MutantPlant = true;
             this.MutantPlant_Mult = false;
             this.MutantPlant_SelfHarvest= false;

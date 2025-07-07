@@ -51,6 +51,8 @@ namespace Unlock_Cheat
                 if (option.Achievement) ManualPatch.ManualPatch_NS("Unlock_Cheat.AchievementUnlock");
                 if (option.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
                 if (option.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
+                if (option.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
+
                 if (option.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
                 if (DlcManager.IsExpansion1Active()) ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
 
