@@ -110,7 +110,7 @@
 	  <PreviewPng Include="$(ProjectDir)\*.png" />
 	  <TranslatePot Include="$(ProjectDir)\strings\*.*" />
       <TranslatePo Include="$(ProjectDir)\Translations\*.*" />
-
+        
 
 
 	</ItemGroup>

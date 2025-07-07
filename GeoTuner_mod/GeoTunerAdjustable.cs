@@ -56,7 +56,7 @@ namespace GeoTuner_mod
         {
             get
             {
-                return 5f;
+                return option.Maxcount;
             }
         }
 
@@ -73,76 +73,82 @@ namespace GeoTuner_mod
         {
             get
             {
-                return Languages.UI.UISIDESCREENS.GeoTunerAdjustable.Units;
+                return UI.UISIDESCREENS.GEOTUNERADJUSTABLE.UNITS;
             }
         }
 
-        public int SliderDecimalPlaces(int i)
-        {
-            return 8;
-        }
+        //public int SliderDecimalPlaces(int i)
+        //{
+        //    return 0;
+        //}
 
-        public float GetSliderValue(int i)
-        {
-            return this.MAX_GEOTUNED;
-        }
+        //public float GetSliderValue(int i)
+        //{
+        //    return this.MAX_GEOTUNED;
+        //}
 
-        public string GetSliderTooltipKey(int i)
-        {
-            return "STRINGS.UI.UISIDESCREENS.AIRCONDITIONERTEMPERATURESIDESCREEN.TOOLTIP";
-        }
-
-
-        public string GetSliderTooltip()
-        {
-            return string.Format(Languages.UI.UISIDESCREENS.GeoTunerAdjustable.TOOLTIP, new object[]
-            {
-                this.MAX_GEOTUNED,
-                this.SliderUnits,
-                0f,
-                STRINGS.UI.UNITSUFFIXES.ELECTRICAL.WATT
-            });
-        }
+        //public string GetSliderTooltipKey(int i)
+        //{
+        //    return "GeoTuner_mod.UI.UISIDESCREENS.GeoTunerAdjustable.TOOLTIP";
+        //}
 
 
-        public string SliderTitleKey
-        {
-            get
-            {
-                return "STRINGS.UI.UISIDESCREENS.AIRCONDITIONERTEMPERATURESIDESCREEN.TITLE";
-            }
-        }
+        //public string GetSliderTooltip(int i)
+        //{
+        //    return string.Format(UI.UISIDESCREENS.GeoTunerAdjustable.TOOLTIP, this.MAX_GEOTUNED);
+        //}
 
-        // Token: 0x17000008 RID: 8
-        // (get) Token: 0x0600000F RID: 15 RVA: 0x00002204 File Offset: 0x00000404
-        public string SliderUnits
-        {
-            get
-            {
-                return Languages.UI.UISIDESCREENS.GeoTunerAdjustable.Units;
-            }
-        }
 
-        public void SetSliderValue(int val, int i)
-        {
-            if(val == Old_GEOTUNED)
-            {
-                return;
-            }
-            this.MAX_GEOTUNED = val;
-            this.Update();
-        }
+        //public string SliderTitleKey
+        //{
+        //    get
+        //    {
+        //        return "GeoTuner_mod.UI.UISIDESCREENS.GeoTunerAdjustable.TITLE";
+        //    }
+        //}
 
+
+        //public string SliderUnits
+        //{
+        //    get
+        //    {
+        //        return UI.UISIDESCREENS.GeoTunerAdjustable.Units;
+        //    }
+        //}
+
+        //public void SetSliderValue(float val, int i)
+        //{
+        //    if(val == Old_GEOTUNED)
+        //    {
+        //        return;
+        //    }
+        //    this.MAX_GEOTUNED = val;
+        //    this.Update();
+        //}
+
+
+        //public float GetSliderMin(int index)
+        //{
+        //    return 1f;
+        //}
+
+        //public float GetSliderMax(int index)
+        //{
+        //    return option.Maxcount;
+        //}
 
         protected override void OnPrefabInit()
         {
+         
             base.OnPrefabInit();
+
             base.Subscribe<GeoTunerAdjustable>(-905833192, GeoTunerAdjustable.OnCopySettingsDelegate);
         }
 
  
         protected override void OnSpawn()
         {
+      
             this.Update();
         }
 
@@ -250,7 +256,7 @@ namespace GeoTuner_mod
 
 
                 Old_GEOTUNED = this.MAX_GEOTUNED;
-                global::Debug.Log("协调：" + this.MAX_GEOTUNED);
+                //global::Debug.Log("协调：" + this.MAX_GEOTUNED);
             }
             //targetGeotuner.AssignGeyser(assignedGeyser);
 
@@ -263,8 +269,10 @@ namespace GeoTuner_mod
 
         private static readonly EventSystem.IntraObjectHandler<GeoTunerAdjustable> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<GeoTunerAdjustable>(new Action<GeoTunerAdjustable, object>(GeoTunerAdjustable.OnCopySettings));
 
-        public const string KEY = "STRINGS.UI.UISIDESCREENS.AIRCONDITIONERTEMPERATURESIDESCREEN";
 
+
+        //[SerializeField]
+        //private ToolTip toolTip;
 
         [MyCmpAdd]
         public CopyBuildingSettings copyBuildingSettings;

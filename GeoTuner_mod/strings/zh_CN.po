@@ -1,0 +1,24 @@
+msgid ""
+msgstr ""
+"Application: Oxygen Not Included"
+"POT Version: 2.0"
+
+#. GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TITLE
+msgctxt "GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TITLE"
+msgid "GEYSER_GEOTUNED"
+msgstr "地质调谐"
+
+#. GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TOOLTIP
+msgctxt "GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TOOLTIP"
+msgid "This geyser is being boosted {0} tuning tuning  by <style=\"KKeyword\">Geotuners</style>"
+msgstr "这个间歇泉由<style=\"KKeyword\">地质调谐仪</style>调谐了 {0} 次"
+
+#. GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.UNITS
+msgctxt "GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.UNITS"
+msgid "tuning"
+msgstr "调谐"
+
+#. GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.NODETAILS
+msgctxt "GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.NODETAILS"
+msgid "No details to show"
+msgstr "详情省略"

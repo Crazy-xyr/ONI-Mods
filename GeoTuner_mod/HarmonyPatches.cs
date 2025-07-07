@@ -1,17 +1,15 @@
 ﻿
 using HarmonyLib;
 using KMod;
-
+using PeterHan.PLib.Core;
+using PeterHan.PLib.Options;
+using STRINGS;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
-
+using TUNING;
 using UnityEngine;
-
-using STRINGS;
-using PeterHan.PLib.Options;
-using PeterHan.PLib.Core;
+using static GeoTuner_mod.UI.UISIDESCREENS;
 namespace GeoTuner_mod
 {
 
@@ -23,7 +21,15 @@ namespace GeoTuner_mod
             PUtil.InitLibrary(false);
             new POptions().RegisterOptions(this, typeof(Options));
             base.OnLoad(harmony);
-            LocString.CreateLocStringKeys(typeof(Languages), "STRINGS.");
+           // LocString.CreateLocStringKeys(typeof(UI), "STRINGS.");
+
+#if DEBUG
+            ModUtil.RegisterForTranslation(typeof(UI));
+#else
+            Localization.RegisterForTranslation(typeof(UI));
+#endif
+
+       
 
         }
     }
@@ -62,11 +68,11 @@ namespace GeoTuner_mod
                 {
                     if (!usingStudiedTooltip)
                     {
-                        return UI.UISIDESCREENS.GEOTUNERSIDESCREEN.UNSTUDIED_TOOLTIP.ToString();
+                        return STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.UNSTUDIED_TOOLTIP.ToString();
                     }
                     if (geyser != ___targetGeotuner.GetFutureGeyser() && geotunedCount >= 1)
                     {
-                        return UI.UISIDESCREENS.GEOTUNERSIDESCREEN.GEOTUNER_LIMIT_TOOLTIP.ToString();
+                        return STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.GEOTUNER_LIMIT_TOOLTIP.ToString();
                     }
                     Func<float, float> func = delegate (float emissionPerCycleModifier)
                     {
@@ -80,14 +86,21 @@ namespace GeoTuner_mod
                         return massPerCycle / num3 / eruptionDuration;
                     };
                     GeoTunerConfig.GeotunedGeyserSettings settingsForGeyser = ___targetGeotuner.def.GetSettingsForGeyser(geyser);
-                    float num = (Geyser.temperatureModificationMethod == Geyser.ModificationMethod.Percentages) ? (settingsForGeyser.template.temperatureModifier * geyser.configuration.geyserType.temperature) : settingsForGeyser.template.temperatureModifier;
-                    float num2 = func((Geyser.massModificationMethod == Geyser.ModificationMethod.Percentages) ? (settingsForGeyser.template.massPerCycleModifier * geyser.configuration.scaledRate) : settingsForGeyser.template.massPerCycleModifier);
-                    float temperature = geyser.configuration.geyserType.temperature;
+                    GeoTunerAdjustable  ad = ___targetGeotuner.gameObject.AddOrGet<GeoTunerAdjustable>();
+                    float max_geotuned = 1 * Option.Geyser_Ratio;
+                    if (ad != null)
+                    {
+                        max_geotuned *= ad.UserMaxCapacity;
+
+                    }
+
+                    float num = (Geyser.temperatureModificationMethod == Geyser.ModificationMethod.Percentages) ? (settingsForGeyser.template.temperatureModifier * geyser.configuration.geyserType.temperature * max_geotuned) : settingsForGeyser.template.temperatureModifier * max_geotuned;
+                    float num2 = func((Geyser.massModificationMethod == Geyser.ModificationMethod.Percentages) ? (settingsForGeyser.template.massPerCycleModifier * geyser.configuration.scaledRate * max_geotuned ) : settingsForGeyser.template.massPerCycleModifier * max_geotuned);
                     func2(geyser.configuration.scaledIterationLength, geyser.configuration.scaledRate, geyser.configuration.scaledIterationLength * geyser.configuration.scaledIterationPercent);
                     string str = ((num > 0f) ? "+" : "") + GameUtil.GetFormattedTemperature(num, GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Relative, true, false);
                     string str2 = ((num2 > 0f) ? "+" : "") + GameUtil.GetFormattedMass(num2, GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.##}");
                     string newValue = settingsForGeyser.material.ProperName();
-                    return (UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP + "\n" + "\n" + UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_MATERIAL).Replace("{MATERIAL}", newValue) + "\n" + str + "\n" + str2 + "\n" + "\n" + UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_VISIT_GEYSER;
+                    return (STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP + "\n" + "\n" + STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_MATERIAL).Replace("{MATERIAL}", newValue) + "\n" + str + "\n" + str2 + "\n" + "\n" + STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_VISIT_GEYSER;
                 };
 
                 MultiToggle component2 = gameObject.GetComponent<MultiToggle>();
@@ -205,6 +218,30 @@ namespace GeoTuner_mod
 
         }
 
+        [HarmonyPatch(typeof(Geyser), "GetDescriptors")]
 
+        private static class Patch_Geyser_GetDescriptors
+        {
+            public static void Postfix(Geyser __instance, GameObject go, ref List<Descriptor> __result)
+            {
+                List<GeoTuner.Instance> items = Components.GeoTuners.GetItems(__instance.gameObject.GetMyWorldId());
+                int num = items.Count((GeoTuner.Instance x) => x.GetAssignedGeyser() == __instance);
+                bool flag = num > 0;
+                if (!flag)
+                {
+                    return;
+
+                }
+                string text = string.Format(STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION_GEOTUNED, ElementLoader.FindElementByHash(__instance.configuration.GetElement()).name, 
+                    GameUtil.GetFormattedMass(__instance.configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}"), 
+                    GameUtil.GetFormattedTemperature(__instance.configuration.GetTemperature(), GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, true, false));
+                text += "\n" + UI.UISIDESCREENS.GEOTUNERADJUSTABLE.NODETAILS;
+                string arg = ElementLoader.FindElementByHash(__instance.configuration.GetElement()).tag.ProperName();
+
+                __result[0] = new Descriptor(string.Format(STRINGS.UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(__instance.configuration.GetEmitRate(),
+                    GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}"), GameUtil.GetFormattedTemperature(__instance.configuration.GetTemperature(),
+                    GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, true, false)), text, Descriptor.DescriptorType.Effect, false);
+            }
+        }
     }
 }
