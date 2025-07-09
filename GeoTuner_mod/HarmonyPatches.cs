@@ -225,17 +225,27 @@ namespace GeoTuner_mod
             public static void Postfix(Geyser __instance, GameObject go, ref List<Descriptor> __result)
             {
                 List<GeoTuner.Instance> items = Components.GeoTuners.GetItems(__instance.gameObject.GetMyWorldId());
-                int num = items.Count((GeoTuner.Instance x) => x.GetAssignedGeyser() == __instance);
+                List<GeoTuner.Instance> GeoTuners = items.FindAll((GeoTuner.Instance x) => x.GetAssignedGeyser() == __instance);
+                int num = GeoTuners.Count;
                 bool flag = num > 0;
                 if (!flag)
                 {
                     return;
 
                 }
+                float count=0;
+                foreach (GeoTuner.Instance i in GeoTuners)
+                {
+                     count += i.GetComponent<GeoTunerAdjustable>().UserMaxCapacity;
+                }
+
+
                 string text = string.Format(STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION_GEOTUNED, ElementLoader.FindElementByHash(__instance.configuration.GetElement()).name, 
                     GameUtil.GetFormattedMass(__instance.configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}"), 
                     GameUtil.GetFormattedTemperature(__instance.configuration.GetTemperature(), GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, true, false));
+                text += "\n" + string.Format(UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TOOLTIP, count, num);
                 text += "\n" + UI.UISIDESCREENS.GEOTUNERADJUSTABLE.NODETAILS;
+
                 string arg = ElementLoader.FindElementByHash(__instance.configuration.GetElement()).tag.ProperName();
 
                 __result[0] = new Descriptor(string.Format(STRINGS.UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(__instance.configuration.GetEmitRate(),

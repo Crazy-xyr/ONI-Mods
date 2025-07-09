@@ -10,8 +10,8 @@ msgstr "地质调谐"
 
 #. GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TOOLTIP
 msgctxt "GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TOOLTIP"
-msgid "This geyser is being boosted {0} tuning tuning  by <style=\"KKeyword\">Geotuners</style>"
-msgstr "这个间歇泉由<style=\"KKeyword\">地质调谐仪</style>调谐了 {0} 次"
+msgid "This geyser is being boosted {0} tuning tuning  by {1} <style=\"KKeyword\">Geotuners</style>"
+msgstr "这个间歇泉由 {1} 个<style=\"KKeyword\">地质调谐仪</style>调谐了 {0} 次"
 
 #. GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.UNITS
 msgctxt "GeoTuner_mod.UI.UISIDESCREENS.GEOTUNERADJUSTABLE.UNITS"
