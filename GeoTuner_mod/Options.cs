@@ -32,11 +32,17 @@ namespace GeoTuner_mod
         public float Geyser_Ratio { get; set; }
 
 
+        [JsonProperty]
+        [Option("调谐仪耗电量", "地质调谐仪耗电量是否同步增加", null)]
+        public bool energyConsumer { get; set; }
+
+
         public Options()
         {
             this.Maxcount = 5;
             this.Geotuners_Ratio = 1;
             this.Geyser_Ratio = 1;
+            this.energyConsumer= true;
 
         }
 

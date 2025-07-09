@@ -148,7 +148,14 @@ namespace GeoTuner_mod
  
         protected override void OnSpawn()
         {
-      
+
+            if (option.energyConsumer)
+            {
+                this.BaseWattageRating = this.energyConsumer.WattsNeededWhenActive;
+                this.energyConsumer.BaseWattageRating = this.BaseWattageRating * this.MAX_GEOTUNED * option.Geotuners_Ratio;
+            }
+
+
             this.Update();
         }
 
@@ -252,8 +259,9 @@ namespace GeoTuner_mod
 
 
                 targetGeotuner.AssignFutureGeyser(assignedGeyser);
-  
 
+                if (option.energyConsumer)
+                { this.energyConsumer.BaseWattageRating = this.BaseWattageRating * this.MAX_GEOTUNED * option.Geotuners_Ratio; }
 
                 Old_GEOTUNED = this.MAX_GEOTUNED;
                 //global::Debug.Log("协调：" + this.MAX_GEOTUNED);
@@ -277,8 +285,14 @@ namespace GeoTuner_mod
         [MyCmpAdd]
         public CopyBuildingSettings copyBuildingSettings;
 
+
+        private float BaseWattageRating;
+
         [Serialize]
         private float Old_GEOTUNED = 1f;
+
+        [MyCmpReq]
+        public EnergyConsumer energyConsumer;
 
         [Serialize]
         private float MAX_GEOTUNED = 1f;

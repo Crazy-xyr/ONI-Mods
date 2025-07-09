@@ -3,24 +3,24 @@ using HarmonyLib;
 using KMod;
 using PeterHan.PLib.Core;
 using PeterHan.PLib.Options;
-using STRINGS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TUNING;
+using System.Reflection;
 using UnityEngine;
-using static GeoTuner_mod.UI.UISIDESCREENS;
 namespace GeoTuner_mod
 {
 
     internal class HarmonyPatches : UserMod2
     {
+
         public override void OnLoad(Harmony harmony)
         {
 
             PUtil.InitLibrary(false);
             new POptions().RegisterOptions(this, typeof(Options));
             base.OnLoad(harmony);
+
            // LocString.CreateLocStringKeys(typeof(UI), "STRINGS.");
 
 #if DEBUG
@@ -29,9 +29,12 @@ namespace GeoTuner_mod
             Localization.RegisterForTranslation(typeof(UI));
 #endif
 
-       
+            if (SingletonOptions<Options>.Instance.energyConsumer)
+            {
+                Patches.Patch_EnergyConsumer_WattsNeededWhenActive.Patch(harmony); 
+            }
 
-        }
+         }
     }
 
         internal class Patches
@@ -251,6 +254,38 @@ namespace GeoTuner_mod
                 __result[0] = new Descriptor(string.Format(STRINGS.UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(__instance.configuration.GetEmitRate(),
                     GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}"), GameUtil.GetFormattedTemperature(__instance.configuration.GetTemperature(),
                     GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, true, false)), text, Descriptor.DescriptorType.Effect, false);
+            }
+        }
+
+
+
+        public static class Patch_EnergyConsumer_WattsNeededWhenActive
+        {
+
+            public static void Patch(Harmony harmony)
+            {   
+                    MethodInfo method = typeof(EnergyConsumer).GetProperty("WattsNeededWhenActive", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetGetMethod();
+                    MethodInfo method2 = typeof(Patch_EnergyConsumer_WattsNeededWhenActive).GetMethod("Prefix");
+                    harmony.Patch(method, new HarmonyMethod(method2), null, null, null);
+            }
+            public static bool Prefix(EnergyConsumer __instance, Building ___building, ref float __result)
+            {
+
+                if (___building.Def.PrefabID != "GeoTuner")
+                {
+                    __result = ___building.Def.EnergyConsumptionWhenActive;
+                    return true;
+                }
+                GeoTunerAdjustable component = __instance.GetComponent<GeoTunerAdjustable>();
+
+                if (component == null)
+                {
+                    __result = ___building.Def.EnergyConsumptionWhenActive;
+                    return true;
+
+                }
+                __result = ___building.Def.EnergyConsumptionWhenActive * component.UserMaxCapacity * Option.Geotuners_Ratio;
+                return false;
             }
         }
     }
