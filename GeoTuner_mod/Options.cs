@@ -31,6 +31,9 @@ namespace GeoTuner_mod
         [Limit(0.1, 10)]
         public float Geyser_Ratio { get; set; }
 
+        [JsonProperty]
+        [Option("调谐仪原版限制", "地质调谐仪像原版一样同时调谐一个泉", null)]
+        public bool Broker_Vanilla { get; set; }
 
         [JsonProperty]
         [Option("调谐仪耗电量", "地质调谐仪耗电量是否同步增加", null)]
@@ -42,6 +45,7 @@ namespace GeoTuner_mod
             this.Maxcount = 5;
             this.Geotuners_Ratio = 1;
             this.Geyser_Ratio = 1;
+            this.Broker_Vanilla = false;
             this.energyConsumer= true;
 
         }

@@ -45,7 +45,7 @@ namespace GeoTuner_mod
 
        
         [HarmonyPatch(typeof(GeoTunerSideScreen), "SetRow")]
-        public static class GeoTunerSideScreen_WSetRow
+        public static class GeoTunerSideScreen_SetRow
         {
  
 
@@ -106,34 +106,44 @@ namespace GeoTuner_mod
                     return (STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP + "\n" + "\n" + STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_MATERIAL).Replace("{MATERIAL}", newValue) + "\n" + str + "\n" + str2 + "\n" + "\n" + STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_VISIT_GEYSER;
                 };
 
-                MultiToggle component2 = gameObject.GetComponent<MultiToggle>();
-                component2.onClick = delegate ()
-                {
-                    if (geyser == null || geyser.GetComponent<Studyable>().Studied)
-                    {
-                        if (geyser == ___targetGeotuner.GetFutureGeyser())
-                        {
-                            return;
-                        }
-                        IEnumerable<GeoTuner.Instance> items = Components.GeoTuners.GetItems(___targetGeotuner.GetMyWorldId());
-                        Func<GeoTuner.Instance, bool> predicate = ((GeoTuner.Instance x) => x.GetAssignedGeyser() == geyser || x.GetFutureGeyser() == geyser);
-                        
-                        int num = items.Count(predicate);
-                        if (geyser != null && num + 1 > 1)
-                        {
-                            return;
-                        }
-                        ___targetGeotuner.AssignFutureGeyser(geyser);
-                        Traverse.Create(__instance).Method("RefreshOptions").GetValue();
 
-                    }
-                };
+                if (!Option.Broker_Vanilla)
+                {
+
+                    MultiToggle component2 = gameObject.GetComponent<MultiToggle>();
+                    component2.onClick = delegate ()
+                    {
+                        if (geyser == null || geyser.GetComponent<Studyable>().Studied)
+                        {
+                            if (geyser == ___targetGeotuner.GetFutureGeyser())
+                            {
+                                return;
+                            }
+                            IEnumerable<GeoTuner.Instance> items = Components.GeoTuners.GetItems(___targetGeotuner.GetMyWorldId());
+                            Func<GeoTuner.Instance, bool> predicate = ((GeoTuner.Instance x) => x.GetAssignedGeyser() == geyser || x.GetFutureGeyser() == geyser);
+
+                            int num = items.Count(predicate);
+                            if (geyser != null && num + 1 > 1)
+                            {
+                                return;
+                            }
+                            ___targetGeotuner.AssignFutureGeyser(geyser);
+                            Traverse.Create(__instance).Method("RefreshOptions").GetValue();
+
+                        }
+                    };
+
+
+
+                }
+
+               
             }
         }
 
         [HarmonyPatch(typeof(GeoTunerConfig), "ConfigureBuildingTemplate")]
 
-        private static class Patch_AirConditionerConfig_ConfigureBuildingTemplate
+        private static class GeoTunerConfig_ConfigureBuildingTemplate
         {
             public static void Postfix(GameObject go)
             {
@@ -146,7 +156,7 @@ namespace GeoTuner_mod
 
         [HarmonyPatch(typeof(GeoTuner.Instance), "RefreshModification")]
 
-        private static class Patch_GeoTunerInstance_RefreshModification
+        private static class GeoTunerInstance_RefreshModification_Pre
         {
             public static bool Prefix(GeoTuner.Instance __instance)
             {
@@ -189,7 +199,7 @@ namespace GeoTuner_mod
 
         [HarmonyPatch(typeof(GeoTuner.Instance), "RefreshModification")]
 
-        private static class Patch_GeoTuner_RefreshModification
+        private static class GeoTunerInstance_RefreshModification_Post
         {
             public static void Postfix(GeoTuner.Instance __instance)
             {
@@ -223,7 +233,7 @@ namespace GeoTuner_mod
 
         [HarmonyPatch(typeof(Geyser), "GetDescriptors")]
 
-        private static class Patch_Geyser_GetDescriptors
+        private static class Geyser_GetDescriptors
         {
             public static void Postfix(Geyser __instance, GameObject go, ref List<Descriptor> __result)
             {
@@ -236,18 +246,38 @@ namespace GeoTuner_mod
                     return;
 
                 }
-                float count=0;
-                foreach (GeoTuner.Instance i in GeoTuners)
-                {
-                     count += i.GetComponent<GeoTunerAdjustable>().UserMaxCapacity;
-                }
 
+                Func<float, float> func = delegate (float emissionPerCycleModifier)
+                {
+                    float num8 = 600f / __instance.configuration.GetIterationLength();
+                    return emissionPerCycleModifier / num8 / __instance.configuration.GetOnDuration();
+                };
 
                 string text = string.Format(STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION_GEOTUNED, ElementLoader.FindElementByHash(__instance.configuration.GetElement()).name, 
                     GameUtil.GetFormattedMass(__instance.configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}"), 
                     GameUtil.GetFormattedTemperature(__instance.configuration.GetTemperature(), GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, true, false));
+                float num2;
+                float num3;
+                string str;
+                string str2;
+                string text2;
+                string text3 = "";
+                float count = 0;
+                float count1 = 0;
+                foreach (GeoTuner.Instance instance in GeoTuners)
+                {
+                    num2 = (Geyser.temperatureModificationMethod == Geyser.ModificationMethod.Percentages) ? (instance.currentGeyserModification.temperatureModifier * __instance.configuration.geyserType.temperature) : instance.currentGeyserModification.temperatureModifier;
+                    num3 = func((Geyser.massModificationMethod == Geyser.ModificationMethod.Percentages) ? (instance.currentGeyserModification.massPerCycleModifier * __instance.configuration.scaledRate) : instance.currentGeyserModification.massPerCycleModifier);
+                    str = ((num2 > 0f) ? "+" : "") + GameUtil.GetFormattedTemperature(num2, GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Relative, true, false);
+                    str2 = ((num3 > 0f) ? "+" : "") + GameUtil.GetFormattedMass(num3, GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.##}");
+                    count1 = instance.GetComponent<GeoTunerAdjustable>().UserMaxCapacity;
+                    text2 = "\n    • " + count1+ STRINGS.UI.UISIDESCREENS.GEOTUNERSIDESCREEN.STUDIED_TOOLTIP_GEOTUNER_MODIFIER_ROW_TITLE.ToString();
+                    text2 = text2 + str2 + " " + str;
+                    count += count1;
+                    text3 += text2;
+                }
                 text += "\n" + string.Format(UI.UISIDESCREENS.GEOTUNERADJUSTABLE.TOOLTIP, count, num);
-                text += "\n" + UI.UISIDESCREENS.GEOTUNERADJUSTABLE.NODETAILS;
+                text += "\n" + text3;
 
                 string arg = ElementLoader.FindElementByHash(__instance.configuration.GetElement()).tag.ProperName();
 
@@ -273,18 +303,15 @@ namespace GeoTuner_mod
 
                 if (___building.Def.PrefabID != "GeoTuner")
                 {
-                    __result = ___building.Def.EnergyConsumptionWhenActive;
                     return true;
                 }
                 GeoTunerAdjustable component = __instance.GetComponent<GeoTunerAdjustable>();
-
                 if (component == null)
                 {
-                    __result = ___building.Def.EnergyConsumptionWhenActive;
                     return true;
-
                 }
                 __result = ___building.Def.EnergyConsumptionWhenActive * component.UserMaxCapacity * Option.Geotuners_Ratio;
+                __instance.BaseWattageRating = __result;
                 return false;
             }
         }

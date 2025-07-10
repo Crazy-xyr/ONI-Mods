@@ -14,7 +14,7 @@ namespace GeoTuner_mod
                    
                     public static LocString UNITS = "tuning";
 
-                    public static LocString NODETAILS = "No details to show";
+                    //public static LocString NODETAILS = "No details to show";
                 }
 
             }
