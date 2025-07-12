@@ -12,14 +12,13 @@ namespace Unlock_Cheat.Harvest
 {
     internal class Harvest
     {
-        private static Options option = SingletonOptions<Options>.Instance;
         [HarmonyPatch(typeof(NoseconeHarvestConfig))]
         [HarmonyPatch("DoPostConfigureComplete")]
         public class harvestModule
         {
             public static void Postfix(NoseconeHarvestConfig __instance, GameObject go)
             {
-                go.AddOrGetDef<ResourceHarvestModule.Def>().harvestSpeed = __instance.solidCapacity / __instance.timeToFill * option.Harvest_mult;
+                go.AddOrGetDef<ResourceHarvestModule.Def>().harvestSpeed = __instance.solidCapacity / __instance.timeToFill * Unlock_Cheat.Options.Harvest_mult;
             }
         }
 
@@ -31,7 +30,7 @@ namespace Unlock_Cheat.Harvest
 
             public static void Postfix1(ref float __result)
             {
-                __result *= option.Harvest_mult;
+                __result *= Unlock_Cheat.Options.Harvest_mult;
             }
 
             [HarmonyPrefix]
@@ -39,7 +38,7 @@ namespace Unlock_Cheat.Harvest
 
             public static void Prefix1(ref float amount)
             {
-                amount /= option.Harvest_mult;
+                amount /= Unlock_Cheat.Options.Harvest_mult;
             }
         }
 
@@ -59,7 +58,7 @@ namespace Unlock_Cheat.Harvest
                 {
                     return;
                 }
-                __instance.poiTotalCapacity *= option.Harvest_poi_mult;
+                __instance.poiTotalCapacity *= Unlock_Cheat.Options.Harvest_poi_mult;
             }
         }
 
@@ -69,7 +68,7 @@ namespace Unlock_Cheat.Harvest
         {
             public static void Prefix(ref float capacity)
             {
-                capacity *= option.Harvest_storage_mult;
+                capacity *= Unlock_Cheat.Options.Harvest_storage_mult;
             }
         }
 
@@ -81,7 +80,7 @@ namespace Unlock_Cheat.Harvest
         {
             public static void Prefix(ref float storageSize)
             {
-                storageSize *= option.Harvest_storage_mult * 1000;
+                storageSize *= Unlock_Cheat.Options.Harvest_storage_mult * 1000;
             }
         }
     }

@@ -32,14 +32,20 @@ namespace Unlock_Cheat
 
         [JsonProperty]
         [Option("植物变异", "种子/植物添加变异按钮.", "植物变异")]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public bool MutantPlant { get; set; }
 
         [JsonProperty]
         [Option("允许植物多次变异", "变异植物添加也变异按钮,选择好需要的变异后.重新保存读档只有最后一次变异才会生效.否则面板上的数据不准确,实际上是多个变异效果叠加,会有意料之外的效果", "植物变异")]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public bool MutantPlant_Mult { get; set; }
 
         [JsonProperty]
         [Option("变异植物自动收获", "所有的变异植物都会自动收获按,需要开启植物变异", "植物变异")]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public bool MutantPlant_SelfHarvest { get; set; }
 
 
@@ -51,23 +57,37 @@ namespace Unlock_Cheat
         [JsonProperty]
         [Option("太空挖矿倍率", "用更少的钻石挖更多的矿", "太空挖矿")]
         [Limit(1f,1000f)]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public float Harvest_mult { get; set; }
 
         [JsonProperty]
         [Option("火箭货仓容量修改", "挖矿效率提高应该搭配更大的货仓,装卸端口也会同步提高", "太空挖矿")]
         [Limit(1f, 1000f)]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public float Harvest_storage_mult { get; set; }
 
         [JsonProperty]
         [Option("太空矿物质量修改", "挖矿效率提高应该搭配更大的矿物", "太空挖矿")]
         [Limit(1f, 1000f)]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public float Harvest_poi_mult { get; set; }
 
         [JsonProperty]
         [Option("伤害修改", "单发火箭伤害", "宇宙内爆破弹")]
         [Limit(0, 1000)]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+
         public int MissileLongRange_damage { get; set; }
 
+
+        [JsonProperty]
+        [Option("基础辐射药丸", "基础辐射药丸施用的最低辐射值", null)]
+        [Limit(0, 100)]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+        public float BasicRadPill_MinRAD { get; set; }
 
         public Options()
         {
@@ -83,6 +103,7 @@ namespace Unlock_Cheat
             this.Harvest_storage_mult = 1f;
             this.Harvest_poi_mult = 1f;
             this.MissileLongRange_damage = 10;
+            this.BasicRadPill_MinRAD = 0f;
 
         }
     }

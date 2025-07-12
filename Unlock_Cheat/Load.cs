@@ -14,6 +14,8 @@ namespace Unlock_Cheat
     {
 
         public static UserMod2 UnlockCheat { get; set; }
+        internal static Options Options = SingletonOptions<Options>.Instance;
+
         public class Load : UserMod2
         {
             // Token: 0x0600002A RID: 42 RVA: 0x0000239F File Offset: 0x0000059F
@@ -47,18 +49,18 @@ namespace Unlock_Cheat
                     Debug.Log("[Unlock_Cheat] 翻译加载失败");
 
                 }
-                Options option = SingletonOptions<Options>.Instance;
-                if (option.Achievement) ManualPatch.ManualPatch_NS("Unlock_Cheat.AchievementUnlock");
-                if (option.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
-                if (option.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
-                if (option.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
+                if (Options.Achievement) ManualPatch.ManualPatch_NS("Unlock_Cheat.AchievementUnlock");
+                if (Options.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
+                if (Options.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
+                if (Options.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
 
 
                 if (DlcManager.IsExpansion1Active()) {
-                    if (option.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
-                    if (option.MutantPlant_SelfHarvest) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
+                    if (Options.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
+                    if (Options.MutantPlant_SelfHarvest) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
                     ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
                     if (DlcManager.IsContentSubscribed("DLC4_ID")) ManualPatch.ManualPatch_NS("Unlock_Cheat.MissileLongRange");
+                    ManualPatch.ManualPatch_NS("Unlock_Cheat.BasicRadPill");
                 }
 
 
@@ -81,14 +83,6 @@ namespace Unlock_Cheat
                     Debug.LogFormat("[Unlock_Cheat] 修补了：{0}.{1}", method.DeclaringType.FullName, method.Name);
                 }
 
-                //try
-                //{
-                //    Localization.Initialize();
-                //}
-                //catch (Exception obj)
-                //{
-                //    Debug.LogWarning(obj);
-                //}
             }
 
         }
