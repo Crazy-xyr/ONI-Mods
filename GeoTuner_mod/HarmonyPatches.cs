@@ -43,7 +43,16 @@ namespace GeoTuner_mod
 
         private static Options Option = SingletonOptions<Options>.Instance;
 
-       
+
+        [HarmonyPatch(typeof(Localization), "Initialize")]
+        public class Localization_Initialize_Patch
+        {
+            public static void Postfix()
+            {
+                LocString.CreateLocStringKeys(typeof(UI), null);
+            }
+        }
+
         [HarmonyPatch(typeof(GeoTunerSideScreen), "SetRow")]
         public static class GeoTunerSideScreen_SetRow
         {

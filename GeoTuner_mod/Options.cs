@@ -4,8 +4,6 @@ using PeterHan.PLib.Options;
 namespace GeoTuner_mod
 {
 
-    [JsonObject(MemberSerialization.OptIn)]
-    [ModInfo("", null, false)]
     [ConfigFile("config.json", true, true)]
     [RestartRequired]
     internal class Options : SingletonOptions<Options>
@@ -13,7 +11,7 @@ namespace GeoTuner_mod
 
 
         [JsonProperty]
-        [Option("协调最大值", "修改地质调谐仪最大次数", null)]
+        [Option("UI.UISIDESCREENS.OPTION.MAX_TUNING.TITLE", "UI.UISIDESCREENS.OPTION.MAX_TUNING.TOOLTIP", null)]
         [Limit(5,10)]
         public int  Maxcount { get; set; }
 
@@ -21,22 +19,22 @@ namespace GeoTuner_mod
 
 
         [JsonProperty]
-        [Option("调谐仪资源消耗倍率", "协调地质调谐仪消耗资源的倍率", null)]
+        [Option("UI.UISIDESCREENS.OPTION.GEOTUNERS_RATIO.TITLE", "UI.UISIDESCREENS.OPTION.GEOTUNERS_RATIO.TOOLTIP", null)]
         [Limit(0.1, 10)]
         public float Geotuners_Ratio { get; set; }
 
 
         [JsonProperty]
-        [Option("间歇泉产出倍率", "协调间歇泉产出增加的倍率", null)]
+        [Option("UI.UISIDESCREENS.OPTION.GEYSER_RATIO.TITLE", "UI.UISIDESCREENS.OPTION.GEYSER_RATIO.TOOLTIP", null)]
         [Limit(0.1, 10)]
         public float Geyser_Ratio { get; set; }
 
         [JsonProperty]
-        [Option("调谐仪原版限制", "地质调谐仪像原版一样同时调谐一个泉", null)]
+        [Option("UI.UISIDESCREENS.OPTION.BROKER_VANILLA.TITLE", "UI.UISIDESCREENS.OPTION.BROKER_VANILLA.TOOLTIP", null)]
         public bool Broker_Vanilla { get; set; }
 
         [JsonProperty]
-        [Option("调谐仪耗电量", "地质调谐仪耗电量是否同步增加", null)]
+        [Option("UI.UISIDESCREENS.OPTION.ENERGYCONSUMER.TITLE", "UI.UISIDESCREENS.OPTION.ENERGYCONSUMER.TOOLTIP", null)]
         public bool energyConsumer { get; set; }
 
 
