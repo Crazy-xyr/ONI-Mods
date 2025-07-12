@@ -53,12 +53,15 @@ namespace Unlock_Cheat
                 if (option.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
                 if (option.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
 
-                if (option.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
-                if (DlcManager.IsExpansion1Active()) ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
 
-                if ( option.MutantPlant_SelfHarvest ) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
+                if (DlcManager.IsExpansion1Active()) {
+                    if (option.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
+                    if (option.MutantPlant_SelfHarvest) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
+                    ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
+                    if (DlcManager.IsContentSubscribed("DLC4_ID")) ManualPatch.ManualPatch_NS("Unlock_Cheat.MissileLongRange");
+                }
 
-                if (DlcManager.IsAllContentSubscribed(new string[] {"EXPANSION1_ID" ,"DLC4_ID"}  )) ManualPatch.ManualPatch_NS("Unlock_Cheat.MissileLongRange");
+
             }
 
             public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
@@ -78,6 +81,14 @@ namespace Unlock_Cheat
                     Debug.LogFormat("[Unlock_Cheat] 修补了：{0}.{1}", method.DeclaringType.FullName, method.Name);
                 }
 
+                //try
+                //{
+                //    Localization.Initialize();
+                //}
+                //catch (Exception obj)
+                //{
+                //    Debug.LogWarning(obj);
+                //}
             }
 
         }

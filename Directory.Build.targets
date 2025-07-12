@@ -30,11 +30,16 @@
 
   <!--Create and update the mod_info and mod file.-->
   <Target Name="WriteModInfoFile" BeforeTargets="PreBuildEvent">
-    <WriteLinesToFile File="$(TargetDir)\mod_info.yaml" Overwrite="true" Lines=
-                      "APIVersion: 2;
-                      supportedContent: $(supportedContent);
-                      minimumSupportedBuild: $(minimumSupportedBuild);
-                      version: &quot;$(Version)&quot;" />
+	  <PropertyGroup>
+		  <ModInfoContent>
+			  APIVersion: 2;
+			  minimumSupportedBuild: $(minimumSupportedBuild);
+			  version: "$(Version)";
+		  </ModInfoContent>
+		  <ModInfoContent Condition="'@(RequiredDlcIds)' != ''">$(ModInfoContent)%0ArequiredDlcIds:%0A@(RequiredDlcIds->'  - %(Identity)', '%0A')</ModInfoContent>
+		  <ModInfoContent Condition="'@(ForbiddenDlcIds)' != ''">$(ModInfoContent)%0AforbiddenDlcIds:%0A@(ForbiddenDlcIds->'  - %(Identity)', '%0A')</ModInfoContent>
+	  </PropertyGroup>
+    <WriteLinesToFile File="$(TargetDir)\mod_info.yaml" Overwrite="true" Lines="$(ModInfoContent)"/>
 
     <PropertyGroup>
       <ModFile>$(TargetDir)\mod.yaml</ModFile>

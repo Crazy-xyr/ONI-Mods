@@ -6,13 +6,19 @@
   <Import Condition=" Exists('Directory.Build.props.user') " Project="Directory.Build.props.user" />
 
   <!--Base Settings-->
-  <PropertyGroup>
+	
+	<ItemGroup>
+  <!-- 定义 requiredDlcIds 列表	
+	<RequiredDlcIds Include="DLC2_ID" />	
+	<ForbiddenDlcIds Include="EXPANSION1_ID" /> 
+-->
+</ItemGroup>
+
+	<PropertyGroup>
     <TargetFramework>net471</TargetFramework>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-    <supportedContent>ALL</supportedContent>
-    <minimumSupportedBuild>469369</minimumSupportedBuild>
+	<minimumSupportedBuild>469369</minimumSupportedBuild>
   </PropertyGroup>
 
   <!--Default all references to CopyLocal False.-->
