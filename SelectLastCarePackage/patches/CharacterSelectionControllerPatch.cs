@@ -40,14 +40,14 @@ namespace crazyxyr.SelectLastCarePackage.Patches2
     [HarmonyPatch(typeof(CharacterContainer), "Reshuffle")]
     public class CharacterContainerPatch
     {
-        public static void Prefix(CharacterContainer __instance)
+        public static void Prefix(CharacterContainer __instance,ref bool is_starter)
         {
             CharacterSelectionController controller = Traverse.Create(__instance).Field("controller").GetValue<CharacterSelectionController>();
             if (controller != null )
             {
                 controller.RemoveLast();
             }
-
+            is_starter = controller.IsStarterMinion;
         }
 
     }
