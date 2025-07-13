@@ -20,7 +20,6 @@ namespace Unlock_Cheat.ItemSkinUnlock
         [HarmonyPatch("GetOwnedCount")]
         public class PermitItems_GetOwnedCount
         {
-            // Token: 0x06000041 RID: 65 RVA: 0x00002744 File Offset: 0x00000944
             public static void Postfix(PermitResource permit,ref int __result)
             {   
 
@@ -33,7 +32,6 @@ namespace Unlock_Cheat.ItemSkinUnlock
         [HarmonyPatch("IsOwnableOnServer")]
         public class PermitResource_IsOwnableOnServer
         {
-            // Token: 0x06000041 RID: 65 RVA: 0x00002744 File Offset: 0x00000944
             public static bool Prefix( ref bool __result)
             {
                 __result = true;
@@ -75,7 +73,6 @@ namespace Unlock_Cheat.ItemSkinUnlock
        [HarmonyPatch(typeof(KleiInventoryScreen), "RefreshBarterPanel")]
         public class KleiInventoryScreen_RefreshBarterPanel
         {
-            // Token: 0x06000041 RID: 65 RVA: 0x00002744 File Offset: 0x00000944
             public static void Postfix(KleiInventoryScreen __instance)
             {
 
@@ -109,7 +106,22 @@ namespace Unlock_Cheat.ItemSkinUnlock
 
             }
         }
-    }
+        [HarmonyPatch(typeof(BarterConfirmationScreen), "Present")]
+        public class BarterConfirmationScreen_Present
+        {
+            public static void Postfix(BarterConfirmationScreen __instance, PermitResource permit, bool isPurchase)
+            {
+                if (isPurchase)
+                {
+                    return;
+                }
+                int count = PermitItems.GetOwnedCount(permit);
+                if (count == 2)
+                {
+                    __instance.transactionDescriptionLabel.SetText(UI.KLEI_INVENTORY_SCREEN.BARTERING.ACTION_DESCRIPTION_RECYCLE + "\n\n" + Languages.UI.USERTEXT.LAST_OWNED);
+                }
+            }
+        }
 
- 
+    }
 }

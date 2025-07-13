@@ -61,7 +61,7 @@ namespace Unlock_Cheat
             {
 
                 public static LocString NO_OWNED = "这个皮肤你暂未拥有,只有使用权";
-                public static LocString LAST_OWNED = "这个皮肤数量是你拥有的最后的一件，分解后就没有了";
+                public static LocString LAST_OWNED = "这个皮肤数量是你拥有的<color=#ff0000ff>最后的一件</color>，分解后就没有了";
             }
 
          }
