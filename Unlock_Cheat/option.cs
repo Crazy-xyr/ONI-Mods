@@ -31,6 +31,11 @@ namespace Unlock_Cheat
         public bool Nosublimate { get; set; }
 
         [JsonProperty]
+        [Option("辐射粒子移动衰减", "是否禁用辐射粒子移动衰减", null)]
+        [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
+        public bool HighEnergyParticle { get; set; }
+
+        [JsonProperty]
         [Option("植物变异", "种子/植物添加变异按钮.", "植物变异")]
         [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
 
@@ -104,6 +109,7 @@ namespace Unlock_Cheat
             this.Harvest_poi_mult = 1f;
             this.MissileLongRange_damage = 10;
             this.BasicRadPill_MinRAD = 0f;
+            this.HighEnergyParticle = false;
 
         }
     }

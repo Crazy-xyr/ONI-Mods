@@ -53,14 +53,14 @@ namespace Unlock_Cheat
                 if (Options.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
                 if (Options.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
                 if (Options.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
-
-
                 if (DlcManager.IsExpansion1Active()) {
                     if (Options.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
                     if (Options.MutantPlant_SelfHarvest) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
-                    ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
                     if (DlcManager.IsContentSubscribed("DLC4_ID")) ManualPatch.ManualPatch_NS("Unlock_Cheat.MissileLongRange");
+                    if (Options.HighEnergyParticle) ManualPatch.ManualPatch_NS("Unlock_Cheat.HighEnergyParticle_Patch");
                     ManualPatch.ManualPatch_NS("Unlock_Cheat.BasicRadPill");
+                    ManualPatch.ManualPatch_NS("Unlock_Cheat.Harvest");
+
                 }
 
 
