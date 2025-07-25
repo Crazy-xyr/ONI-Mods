@@ -53,6 +53,7 @@ namespace Unlock_Cheat
                 if (Options.Skin) ManualPatch.ManualPatch_NS("Unlock_Cheat.ItemSkinUnlock");
                 if (Options.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
                 if (Options.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
+                if (Options.CircuitOverloaded) ManualPatch.ManualPatch_NS("Unlock_Cheat.CircuitOverloaded");
                 if (DlcManager.IsExpansion1Active()) {
                     if (Options.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
                     if (Options.MutantPlant_SelfHarvest) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");

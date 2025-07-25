@@ -31,6 +31,10 @@ namespace Unlock_Cheat
         public bool Nosublimate { get; set; }
 
         [JsonProperty]
+        [Option("电路过载", "取消电路过载损害.", null)]
+        public bool CircuitOverloaded { get; set; }
+
+        [JsonProperty]
         [Option("辐射粒子移动衰减", "是否禁用辐射粒子移动衰减", null)]
         [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
         public bool HighEnergyParticle { get; set; }
@@ -100,6 +104,7 @@ namespace Unlock_Cheat
             this.Skin = false;
             this.Conduit = true;
             this.Nosublimate = true;
+            this.CircuitOverloaded = false;
             this.MutantPlant = true;
             this.MutantPlant_Mult = false;
             this.MutantPlant_SelfHarvest= false;
