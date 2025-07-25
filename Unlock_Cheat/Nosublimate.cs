@@ -8,15 +8,8 @@ namespace Unlock_Cheat.Nosublimate
     {
         public static bool Prefix(Sublimates __instance, float dt)
         {
-            SimHashes element = __instance.GetComponent<PrimaryElement>().ElementID;
-            if (element == SimHashes.SlimeMold || element == SimHashes.ToxicSand || element == SimHashes.BleachStone)
-            {
-                // Skip original method entirely for these materials
-                return false;
-            }
-
-            // Allow normal behavior for other materials
-            return true;
+            SimHashes elementID = __instance.GetComponent<PrimaryElement>().ElementID;
+            return elementID != SimHashes.SlimeMold && elementID != SimHashes.ToxicSand && elementID != SimHashes.ToxicMud && elementID != SimHashes.BleachStone && elementID != SimHashes.DirtyWater;
         }
     }
 }
