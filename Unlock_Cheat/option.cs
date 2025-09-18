@@ -98,6 +98,10 @@ namespace Unlock_Cheat
         [RequireDLCAttribute(DlcManager.EXPANSION1_ID)]
         public float BasicRadPill_MinRAD { get; set; }
 
+        [JsonProperty]
+        [Option("擦拭", "擦拭无视液体质量", null)]
+        public bool MopTool { get; set; }
+
         public Options()
         {
             this.Achievement = true;
@@ -115,6 +119,7 @@ namespace Unlock_Cheat
             this.MissileLongRange_damage = 10;
             this.BasicRadPill_MinRAD = 0f;
             this.HighEnergyParticle = false;
+            this.MopTool = true;
 
         }
     }

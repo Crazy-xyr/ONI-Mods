@@ -54,6 +54,8 @@ namespace Unlock_Cheat
                 if (Options.Conduit) ManualPatch.ManualPatch_NS("Unlock_Cheat.Conduit_mod");
                 if (Options.Nosublimate) ManualPatch.ManualPatch_NS("Unlock_Cheat.Nosublimate");
                 if (Options.CircuitOverloaded) ManualPatch.ManualPatch_NS("Unlock_Cheat.CircuitOverloaded");
+                if (Options.MopTool) ManualPatch.ManualPatch_NS("Unlock_Cheat.MopTool_Patch");
+
                 if (DlcManager.IsExpansion1Active()) {
                     if (Options.MutantPlant) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants");
                     if (Options.MutantPlant_SelfHarvest) ManualPatch.ManualPatch_NS("Unlock_Cheat.MutantPlants.SelfHarvestPatch");
@@ -82,6 +84,15 @@ namespace Unlock_Cheat
                 foreach (MethodBase method in harmony.GetPatchedMethods())
                 {
                     Debug.LogFormat("[Unlock_Cheat] 修补了：{0}.{1}", method.DeclaringType.FullName, method.Name);
+                }
+                Debug.Log("---> ForceFirstLoad translate ");
+                try
+                {
+                    Localization.Initialize();
+                }
+                catch (Exception obj)
+                {
+                    Debug.LogWarning(obj);
                 }
 
             }
