@@ -206,39 +206,116 @@ namespace GeoTuner_mod
         }
 
 
-        [HarmonyPatch(typeof(GeoTuner.Instance), "RefreshModification")]
+        [HarmonyPatch(typeof(GeoTuner), "TriggerSoundsForGeyserChange")]
 
-        private static class GeoTunerInstance_RefreshModification_Post
+        private static class GeoTunerInstance_TriggerSoundsForGeyserChange_Pre
         {
-            public static void Postfix(GeoTuner.Instance __instance)
+            public static bool Prefix(GeoTuner.Instance smi)
             {
-
-
-                Geyser assignedGeyser = __instance.GetAssignedGeyser();
-                if (assignedGeyser == null)
+                if (GeoTuner.gasGeyserTuningSoundPath == null|| GeoTuner.metalGeyserTuningSoundPath == null || GeoTuner.liquidGeyserTuningSoundPath == null)
                 {
+                    GeoTuner.liquidGeyserTuningSoundPath = GlobalAssets.GetSound("GeoTuner_Tuning_Geyser", false);
+                    GeoTuner.gasGeyserTuningSoundPath = GlobalAssets.GetSound("GeoTuner_Tuning_Vent", false);
+                    GeoTuner.metalGeyserTuningSoundPath = GlobalAssets.GetSound("GeoTuner_Tuning_Volcano", false);
+                    global::Debug.Log("GeoTuner 重新赋值");
 
-                    return;
                 }
-                GeoTunerAdjustable ad = __instance.gameObject.AddOrGet<GeoTunerAdjustable>();
-                if (ad == null)
-                {
-                    //global::Debug.Log("RefreshModification 为空");
-
-                    return;
-                }
-                __instance.manualDelivery.AbortDelivery("Switching to new delivery request");
-
-                float quantity = Option.Geotuners_Ratio * ad.UserMaxCapacity;
-                __instance.storage.capacityKg *= quantity;
-                __instance.manualDelivery.capacity *= quantity;
-                __instance.manualDelivery.refillMass *= quantity;
-                __instance.manualDelivery.MinimumMass *= quantity;
-
+                return true;
             }
 
 
         }
+
+        [HarmonyPatch(typeof(GeoTuner), "RefreshStorageRequirements")]
+
+        private static class GeoTunerInstance_RefreshStorageRequirements_Pre
+        {
+            public static bool Prefix(GeoTuner.Instance smi)
+            {
+
+
+                Geyser assignedGeyser = smi.GetAssignedGeyser();
+                if (assignedGeyser == null)
+                {
+                    smi.storage.capacityKg = 0f;
+                    smi.storage.storageFilters = null;
+                    smi.manualDelivery.capacity = 0f;
+                    smi.manualDelivery.refillMass = 0f;
+                    smi.manualDelivery.RequestedItemTag = null;
+                    smi.manualDelivery.AbortDelivery("No geyser is selected for tuning");
+                    return false;
+                }
+                GeoTunerConfig.GeotunedGeyserSettings settingsForGeyser = smi.def.GetSettingsForGeyser(assignedGeyser);
+                float maxquantity = settingsForGeyser.quantity;
+                GeoTunerAdjustable ad = smi.gameObject.AddOrGet<GeoTunerAdjustable>();
+                if (ad != null)
+                {
+                    maxquantity = maxquantity * Option.Geotuners_Ratio * ad.UserMaxCapacity;
+                }
+                smi.storage.capacityKg = maxquantity;
+                smi.storage.storageFilters = new List<Tag>
+                {
+                    settingsForGeyser.material
+                };
+                smi.manualDelivery.AbortDelivery("Switching to new delivery request");
+                smi.manualDelivery.capacity = maxquantity;
+                smi.manualDelivery.refillMass = maxquantity;
+                smi.manualDelivery.MinimumMass = maxquantity;
+                smi.manualDelivery.RequestedItemTag = settingsForGeyser.material;
+                return false;
+            }
+
+
+        }
+
+        [HarmonyPatch(typeof(GeoTuner), "DropStorageIfNotMatching")]
+        private static class GeoTunerInstance_DropStorageIfNotMatching_Pre
+        {
+            public static bool Prefix(GeoTuner.Instance smi)
+            {
+
+
+                Geyser assignedGeyser = smi.GetAssignedGeyser();
+                if (assignedGeyser != null)
+                {
+                    GeoTunerConfig.GeotunedGeyserSettings settingsForGeyser = smi.def.GetSettingsForGeyser(assignedGeyser);
+                    float maxquantity = settingsForGeyser.quantity;
+                    GeoTunerAdjustable ad = smi.gameObject.AddOrGet<GeoTunerAdjustable>();
+                    if (ad != null)
+                    {
+                        maxquantity = maxquantity * Option.Geotuners_Ratio * ad.UserMaxCapacity;
+                    }
+                    List<GameObject> items = smi.storage.GetItems();
+                    if (smi.storage.GetItems() != null && items.Count > 0)
+                    {
+                        Tag tag = items[0].PrefabID();
+                        PrimaryElement component = items[0].GetComponent<PrimaryElement>();
+                        if (tag != settingsForGeyser.material)
+                        {
+                            smi.storage.DropAll(false, false, default(Vector3), true, null);
+                            return false;
+                        }
+                        float num = component.Mass - maxquantity;
+                        if (num > 0f)
+                        {
+                            smi.storage.DropSome(tag, num, false, false, default(Vector3), true, false);
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    smi.storage.DropAll(false, false, default(Vector3), true, null);
+                }
+                return false;
+            }
+
+
+        }
+
+
+
+
 
         [HarmonyPatch(typeof(Geyser), "GetDescriptors")]
 
